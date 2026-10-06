@@ -122,6 +122,19 @@
   .play svg{width:30px;height:30px;margin-left:5px;color:#1a0d05}
   @keyframes pulse{70%{box-shadow:0 0 0 22px rgba(255,138,61,0)}100%{box-shadow:0 0 0 0 rgba(255,138,61,0)}}
   .video-label{position:absolute;left:0;right:0;bottom:0;padding:40px 20px 16px;background:linear-gradient(transparent,rgba(0,0,0,.85));font:600 15px/1.3 var(--display)}
+  .video-card{cursor:pointer}
+  .video-card iframe{position:absolute;inset:0;z-index:2;width:100%;height:100%;border:0}
+  .video-card.playing .play,.video-card.playing .video-label,.video-card.playing .badge,.video-card.playing.shine::after{display:none}
+  .video-card .badge{position:absolute;top:14px;left:14px;z-index:1;padding:6px 10px;border-radius:999px;background:rgba(6,17,19,.85);
+    font:600 11px/1 var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+  .video-card.small .play span{width:64px;height:64px}
+  .video-card.small .play svg{width:24px;height:24px}
+  .video-card.small .video-label{padding:36px 18px 14px;font-size:14px}
+  .more-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-top:clamp(56px,8vw,90px)}
+  .more-head h3{margin:12px 0 0;font:800 clamp(22px,3vw,30px)/1.1 var(--display);text-transform:uppercase}
+  .more-head a{color:var(--gold-2);font-weight:500;font-size:15px;white-space:nowrap}
+  .more-videos{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px;perspective:1000px}
+  @media (max-width:700px){.more-videos{grid-template-columns:1fr}.more-head{flex-direction:column;align-items:start}}
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:30px}
   .stat{border-left:2px solid var(--gold);padding-left:14px}
   .stat b{display:block;font:800 clamp(24px,3vw,32px)/1 var(--display)}
@@ -162,39 +175,152 @@
   .tech-link img{display:none}
 
   /* Escenario 3D (stage plot) */
-  .stage-wrap{margin-top:22px;border-radius:16px;overflow:hidden;position:relative;cursor:grab;touch-action:pan-y;user-select:none;
-    background:radial-gradient(ellipse at 50% 0,rgba(255,138,61,.18),transparent 60%),#040b0c;border:1px solid var(--line)}
-  .stage-wrap:active{cursor:grabbing}
-  .stage-view{perspective:1100px;perspective-origin:50% 20%;height:clamp(340px,52vw,560px);display:grid;place-items:center}
-  .stage{--rx:58deg;--rz:0deg;position:relative;width:min(860px,88%);aspect-ratio:16/9;transform-style:preserve-3d;
-    transform:translateY(6%) rotateX(var(--rx)) rotateZ(var(--rz))}
-  .stage-floor{position:absolute;inset:0;border-radius:10px;
-    background:repeating-linear-gradient(90deg,#1a2a2d 0 2px,#13211f 2px 46px);
-    box-shadow:0 0 0 2px rgba(245,192,74,.35),0 40px 80px rgba(0,0,0,.6)}
-  .stage-floor::after{content:"PÚBLICO";position:absolute;left:50%;bottom:-11%;translate:-50% 0;font:800 13px/1 var(--display);letter-spacing:.5em;color:rgba(245,192,74,.6)}
-  .stage-edge{position:absolute;left:0;right:0;bottom:0;height:34px;transform-origin:bottom;transform:rotateX(-90deg);
-    background:linear-gradient(#2a1a0e,#0d0805);border-radius:0 0 6px 6px}
-  .riser{position:absolute;left:36%;top:6%;width:28%;height:34%;transform:translateZ(16px);background:#22332f;border-radius:6px;box-shadow:0 0 0 1px rgba(255,255,255,.08)}
-  .wedge{position:absolute;width:6%;aspect-ratio:1.4;translate:-50% -50%;transform:translateZ(6px);background:#0a0f10;border-radius:3px;box-shadow:inset 0 0 0 2px #2c3b3d}
-  .station{position:absolute;width:0;height:0;transform-style:preserve-3d}
-  .station .spot{position:absolute;width:90px;height:90px;left:-45px;top:-45px;border-radius:50%;
-    background:radial-gradient(circle,rgba(255,197,49,.5),rgba(255,138,61,.12) 45%,transparent 70%);transition:opacity .3s,transform .3s;opacity:.55}
-  .station.riser-st{transform:translateZ(16px)}
-  .bb{position:absolute;left:0;top:0;transform-origin:50% 100%;
-    transform:translate(-50%,-100%) rotateZ(calc(var(--rz) * -1)) rotateX(calc(var(--rx) * -1));
-    display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
-  .bb .pole{width:2px;height:30px;background:linear-gradient(var(--gold),transparent)}
-  .bb .ic{width:54px;height:54px;border-radius:12px;background:var(--sunset);color:#1a0d05;display:grid;place-items:center;
-    box-shadow:0 10px 20px -6px rgba(0,0,0,.7);transition:transform .25s}
-  .bb .ic svg{width:28px;height:28px}
-  .bb .lbl{background:rgba(6,17,19,.92);border:1px solid var(--line);border-radius:8px;padding:5px 9px;text-align:center;white-space:nowrap;transition:border-color .25s}
-  .bb .lbl b{display:block;font:600 13px/1.2 var(--display);letter-spacing:.04em}
-  .bb .lbl small{font-size:12px;color:var(--muted)}
-  .station.on .spot{opacity:1;transform:scale(1.35)}
-  .station.on .ic{transform:translateY(-6px) scale(1.12)}
-  .station.on .lbl{border-color:var(--gold)}
-  .stage-hint{position:absolute;left:14px;bottom:12px;font-size:12px;color:var(--muted);pointer-events:none}
-  @media (max-width:640px){.stage{width:94%;aspect-ratio:1/1.05}.stage-view{height:440px;perspective:700px}.stage-floor::after{bottom:-8%}.bb .lbl small{display:none}.bb .ic{width:32px;height:32px;border-radius:9px}.bb .ic svg{width:18px;height:18px}.bb .lbl b{font-size:8px}.bb .lbl{padding:3px 5px}.bb .pole{height:10px}.bb{gap:3px}}
+  .stage-wrap{position:relative;margin-top:22px;border-radius:18px;overflow:hidden;border:1px solid var(--line);
+    background:radial-gradient(ellipse 75% 60% at 50% 32%,rgba(255,138,61,.14),transparent 70%),linear-gradient(#071113,#020607)}
+  .stage-view{position:relative;height:clamp(340px,58vw,660px);overflow:hidden;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+  .stage-view.dragging{cursor:grabbing}
+  .stage-view::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(to top,rgba(2,6,7,.9),transparent 20%),radial-gradient(ellipse 55% 35% at 50% 14%,rgba(255,196,120,.09),transparent 70%)}
+  .stage{position:absolute;left:50%;top:50%;width:1000px;height:560px;margin:-280px 0 0 -500px;transform-style:preserve-3d;pointer-events:none;
+    transform:translateY(var(--ty,0px)) scale3d(var(--k,.8),var(--k,.8),var(--k,.8)) rotateX(var(--rx,60deg)) rotateZ(var(--rz,0deg))}
+  .stage div{position:absolute}
+  .stage .bx{transform-style:preserve-3d}
+  .disc{border-radius:50%}
+
+  /* Público y tarima */
+  .ground{background:radial-gradient(ellipse 40% 34% at 50% 40%,rgba(255,150,70,.18),transparent 70%),
+      repeating-linear-gradient(0deg,rgba(255,255,255,.04) 0 1px,transparent 1px 60px),repeating-linear-gradient(90deg,rgba(255,255,255,.04) 0 1px,transparent 1px 60px);
+    -webkit-mask:radial-gradient(ellipse 48% 48% at 50% 42%,#000 35%,transparent 75%);mask:radial-gradient(ellipse 48% 48% at 50% 42%,#000 35%,transparent 75%)}
+  .ground-text{font:800 34px/1 var(--display);letter-spacing:.6em;text-align:center;color:rgba(245,192,74,.4)}
+  .deck>.ft{background:linear-gradient(to top,rgba(245,192,74,.7) 0 3px,transparent 3px),
+      radial-gradient(ellipse 60% 75% at 50% 100%,rgba(255,150,60,.16),transparent 70%),
+      repeating-linear-gradient(90deg,#1d1612 0 38px,#110c09 38px 40px)}
+  .deck>.ff{background:linear-gradient(#0e0e0e,#030303);display:grid;place-items:center}
+  .deck>.ff::before,.riser>.ff::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--sunset);box-shadow:0 0 18px 2px rgba(255,138,61,.75)}
+  .deck>.ff img{height:36px;width:auto}
+  .deck>.fl,.deck>.fr,.deck>.fb{background:#070707}
+  .riser>.ft{background:repeating-linear-gradient(0deg,#2b1416 0 2px,#33181a 2px 4px);box-shadow:inset 0 0 0 2px #4a2023}
+  .riser>.ff{background:#060606}
+  .riser>.fl,.riser>.fr,.riser>.fb{background:#0a0a0a}
+
+  /* PA, truss, luces y pantalla */
+  .pa>.ff{border:2px solid #222;background:radial-gradient(circle 30px at 50% 22%,#2c2c2c 0 55%,#080808 57% 80%,transparent 82%),
+      radial-gradient(circle 42px at 50% 58%,#2c2c2c 0 55%,#080808 57% 80%,transparent 82%),
+      radial-gradient(circle 1px,#2a2a2a 98%,transparent) 0 0/5px 5px,#101010}
+  .pa>.ft,.pa>.fl,.pa>.fr,.pa>.fb{background:#0d0d0d}
+  .truss>.f{--cv:linear-gradient(90deg,#c4c9cd 0 3px,transparent 3px calc(100% - 3px),#c4c9cd calc(100% - 3px));
+    --ch:linear-gradient(#c4c9cd 0 3px,transparent 3px calc(100% - 3px),#c4c9cd calc(100% - 3px));
+    --lat:repeating-linear-gradient(45deg,transparent 0 13px,#868b8f 13px 15px,transparent 15px 22px),repeating-linear-gradient(-45deg,transparent 0 13px,#5e6266 13px 15px,transparent 15px 22px)}
+  .truss>.ff,.truss>.fb{background:var(--cv),var(--lat)}
+  .truss>.fl,.truss>.fr,.truss>.ft{background:var(--ch),var(--lat)}
+  .truss-h>.ff,.truss-h>.fb,.truss-h>.ft{background:var(--ch),var(--lat)}
+  .fixture>.f{background:#161616}
+  .fixture>.ff{background:radial-gradient(circle 9px,#fff4c8 0 35%,#ffb347 60%,transparent 100%),#161616}
+  .cable{background:#3a3a3a}
+  .screen>.ff{background:#020202;box-shadow:0 0 0 4px #161616;overflow:hidden}
+  .screen>.ff .scr{inset:0;display:grid;place-items:center;
+    background:radial-gradient(ellipse 55% 55% at 50% 55%,rgba(255,160,60,.6),transparent 70%),linear-gradient(120deg,#3b0f2f,#6a230c 50%,#3b0f2f);
+    background-size:100% 100%,300% 300%;animation:scrShift 10s ease-in-out infinite alternate}
+  .screen>.ff img{width:76%;height:auto;filter:drop-shadow(0 6px 14px rgba(0,0,0,.6))}
+  .screen>.ff::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,transparent 45%,rgba(0,0,0,.55) 52%) 0 0/5px 5px}
+  .screen>.fb,.screen>.fl,.screen>.fr,.screen>.ft{background:#0b0b0b}
+  @keyframes scrShift{to{background-position:0 0,100% 100%}}
+
+  /* Instrumentos */
+  .drum{background:radial-gradient(circle,#f2ede2 0 55%,#cfc7b6 72%);box-shadow:0 0 0 3px #7a1f22,0 0 0 4px #c9a24a}
+  .shell{background:linear-gradient(90deg,#4a1114,#8f262b 45%,#4a1114);border-radius:0 0 8px 8px}
+  .kick{background:radial-gradient(circle,#0e0e0e 0 34%,#f0e9da 35% 72%,#7a1f22 73% 86%,#c9a24a 87%)}
+  .cym{background:repeating-radial-gradient(circle,#ecbd50 0 2px,#c9922f 2px 4px);box-shadow:0 0 0 1px #8a6420}
+  .pole{background:linear-gradient(90deg,transparent 35%,#9ea4a8 35% 65%,transparent 65%)}
+  .mic{background:linear-gradient(90deg,transparent 8px,#a6acb0 8px 10px,transparent 10px)}
+  .mic::before{content:"";position:absolute;left:3px;top:-6px;width:12px;height:17px;border-radius:6px;background:radial-gradient(circle at 40% 30%,#d0d4d7,#34383b)}
+  .keyboard>.ft{background:linear-gradient(#151515 0 36%,transparent 36%),
+      linear-gradient(90deg,transparent 0,transparent 100%),repeating-linear-gradient(90deg,#f5f1e8 0 6px,#8b8b8b 6px 7px)}
+  .keyboard>.ft::after{content:"";position:absolute;left:4px;right:4px;top:36%;height:34%;
+    background:repeating-linear-gradient(90deg,transparent 0 4px,#111 4px 8px,transparent 8px 14px)}
+  .k2>.ft{background:linear-gradient(#2a0d0e 0 36%,transparent 36%),repeating-linear-gradient(90deg,#f5f1e8 0 6px,#8b8b8b 6px 7px)}
+  .keyboard>.ff,.keyboard>.fb,.keyboard>.fl,.keyboard>.fr{background:#0d0d0d}
+  .kstand>.f{background:#2b2b2b}
+  .amp>.ff{border:3px solid #222;box-shadow:inset 0 3px 0 #c9a24a;
+    background:linear-gradient(#1b1b1b 0 18%,transparent 18%),repeating-linear-gradient(45deg,#1c1c1c 0 2px,#0f0f0f 2px 4px)}
+  .amp>.ft,.amp>.fl,.amp>.fr,.amp>.fb{background:#151515}
+  .conga{background:linear-gradient(90deg,#5a3517,#b0702f 45%,#5a3517);border-radius:6px 6px 14px 14px}
+  .conga-top{background:radial-gradient(circle,#efe6d2 0 60%,#cbbd9f);box-shadow:0 0 0 3px #3b2410}
+  .wedge>.ft{border:2px solid #262626;background:radial-gradient(circle 1px,#2c2c2c 98%,transparent) 0 0/4px 4px,#0c0c0c}
+  .wedge>.ff,.wedge>.fb,.wedge>.fl,.wedge>.fr{background:#090909}
+
+  /* Posiciones: zona en el piso + haz de luz */
+  .pad{pointer-events:auto;cursor:pointer;border:2px dashed rgba(245,192,74,.4);
+    background:radial-gradient(circle,rgba(255,197,49,.16),transparent 68%);transition:border-color .3s,background .3s}
+  .pad:hover,.pad.on{border:2px solid var(--gold);background:radial-gradient(circle,rgba(255,220,130,.6),rgba(255,140,60,.2) 50%,transparent 72%)}
+  .beam{clip-path:polygon(45% 0,55% 0,100% 100%,0 100%);opacity:.2;transition:opacity .4s;animation:beamPulse 6s ease-in-out infinite;
+    background:linear-gradient(rgba(255,226,150,0),rgba(255,214,130,.5) 22%,rgba(255,170,80,.24) 70%,rgba(255,140,60,.04))}
+  .beam.b2{animation-delay:-3s;background:linear-gradient(rgba(255,120,140,0),rgba(255,130,120,.45) 22%,rgba(255,110,90,.2) 70%,rgba(255,90,110,.04))}
+  @keyframes beamPulse{0%,100%{opacity:.12}50%{opacity:.3}}
+  .stage.has-sel .beam{animation:none;opacity:.04}
+  .stage .beam.on{animation:none;opacity:.95}
+  .anc{width:2px;height:2px}
+
+  /* Etiquetas (siempre nítidas, en 2D sobre la escena) */
+  .stage-labels{position:absolute;inset:0;z-index:2;pointer-events:none}
+  .slabel{position:absolute;left:0;top:0;display:flex;flex-direction:column;align-items:center;pointer-events:auto;
+    background:none;border:0;padding:0;color:var(--text);cursor:pointer;font:inherit;will-change:transform;transition:opacity .3s}
+  .slabel .chip{display:flex;align-items:center;gap:8px;padding:4px 12px 4px 4px;border-radius:999px;white-space:nowrap;
+    background:rgba(6,17,19,.86);border:1px solid rgba(255,255,255,.16);box-shadow:0 8px 20px -8px rgba(0,0,0,.8);transition:border-color .25s,background .25s,transform .25s}
+  .slabel .ic{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--sunset);color:#1a0d05}
+  .slabel .ic svg{width:16px;height:16px}
+  .slabel .nm{font:600 12px/1 var(--display);letter-spacing:.03em}
+  .slabel .stem{width:1px;background:linear-gradient(rgba(245,192,74,.9),rgba(245,192,74,.2))}
+  .slabel .dot{width:7px;height:7px;margin-top:-1px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+  .slabel:hover .chip,.slabel.on .chip,.slabel:focus-visible .chip{border-color:var(--gold);background:rgba(36,22,8,.94);transform:translateY(-4px)}
+  .slabel:focus-visible{outline:none}
+  .stage-view.has-sel .slabel:not(.on){opacity:.45}
+
+  /* Controles y ficha de la posición */
+  .stage-ui{position:absolute;top:14px;left:14px;right:14px;z-index:3;display:flex;justify-content:space-between;gap:10px;pointer-events:none}
+  .seg,.zoom{display:flex;gap:2px;padding:3px;border-radius:999px;background:rgba(6,17,19,.88);border:1px solid var(--line);pointer-events:auto}
+  .seg button,.zoom button{border:0;background:none;color:#cfd5d2;font:500 13px/1 var(--body);padding:9px 14px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s}
+  .zoom button{width:36px;padding:7px 0;font-size:18px}
+  .seg button[aria-pressed=true]{background:var(--sunset);color:#1a0d05;font-weight:700}
+  .seg button:not([aria-pressed=true]):hover,.zoom button:hover{background:rgba(255,255,255,.09)}
+  .stage-card{position:absolute;left:14px;bottom:14px;z-index:3;width:300px;max-height:calc(100% - 92px);overflow:auto;padding:16px;
+    border-radius:14px;background:rgba(6,17,19,.92);border:1px solid var(--line)}
+  .stage-card.right{left:auto;right:14px}
+  .stage-hint{position:absolute;right:16px;bottom:14px;z-index:2;font-size:12px;color:var(--muted);pointer-events:none}
+  .card-head{display:flex;gap:12px;align-items:center}
+  .card-head .ic{width:42px;height:42px;flex:none;border-radius:12px;display:grid;place-items:center;background:var(--sunset);color:#1a0d05}
+  .card-head .ic svg{width:22px;height:22px}
+  .card-head small{display:block;margin-bottom:5px;font:600 10px/1 var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+  .card-head b{font:600 16px/1.2 var(--display)}
+  .card-x{margin-left:auto;width:30px;height:30px;flex:none;border-radius:50%;border:1px solid var(--line);background:none;color:var(--text);font-size:16px;cursor:pointer}
+  .card-x:hover{border-color:var(--gold)}
+  .card-ch{list-style:none;margin-top:12px;font-size:13px}
+  .card-ch li{display:grid;grid-template-columns:26px 1fr auto;gap:8px;align-items:baseline;padding:6px 0;border-top:1px solid var(--line)}
+  .card-ch span{font:800 11px/1 var(--display);color:var(--gold)}
+  .card-ch em{font-style:normal;font-size:12px;color:var(--muted);text-align:right}
+  .card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .card-tags span{padding:5px 10px;border-radius:999px;font-size:12px;background:rgba(245,192,74,.14);color:var(--gold-2)}
+  .card-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 12px}
+  .card-stats div{padding:10px 4px;border-radius:10px;text-align:center;background:rgba(255,255,255,.05)}
+  .card-stats b{display:block;font:800 22px/1 var(--display);color:var(--gold)}
+  .card-stats small{font-size:11px;color:var(--muted)}
+  .card-note{margin-top:12px;font-size:13px;color:var(--muted);line-height:1.5}
+  .card-note b{color:var(--gold);font-family:var(--display)}
+  .stage-card:not(:has(.card-ch)){width:260px}
+  @media (max-width:700px){
+    .stage-ui{position:static;padding:12px 12px 0;flex-wrap:wrap}
+    .seg{overflow-x:auto;max-width:100%}
+    .seg button{padding:8px 11px;font-size:12px}
+    .stage-view{height:320px}
+    .zoom{position:absolute;right:12px;top:64px;z-index:3}
+    .stage-card,.stage-card:not(:has(.card-ch)){position:static;width:auto;max-height:none;margin:0 12px 12px}
+    .stage-hint{display:none}
+    .slabel .nm{display:none}
+    .slabel .chip{padding:3px}
+    .slabel.on .nm{display:inline}
+    .slabel.on .chip{padding-right:10px}
+    .slabel .ic{width:24px;height:24px}
+  }
 
   /* Input list */
   .io-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:28px;margin-top:26px}
@@ -377,11 +503,12 @@
   <!-- VIDEOCLIP -->
   <section id="videoclip">
     <div class="wrap video-grid">
-      <a class="video-card s3d" data-3d="rise" data-tilt href="https://www.youtube.com/@RetroKumbia_oficial" target="_blank" rel="noopener" aria-label="Ver el videoclip De los besos que te di en YouTube">
-        <img src="img/galeria-6.webp" alt="Rodaje del videoclip De los besos que te di" loading="lazy">
+      <div class="video-card s3d" data-3d="rise" data-tilt data-yt="7KOUK00pQlM" role="button" tabindex="0" aria-label="Reproducir De los besos que te di (video oficial)">
+        <img src="https://i.ytimg.com/vi/7KOUK00pQlM/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/7KOUK00pQlM/hqdefault.jpg'" alt="Videoclip De los besos que te di" loading="lazy">
+        <span class="badge">Video oficial</span>
         <div class="play"><span><svg><use href="#i-play"/></svg></span></div>
-        <div class="video-label">RetroKumbia · De los besos que te di (Video oficial)</div>
-      </a>
+        <div class="video-label">De los besos que te di · RetroKumbia</div>
+      </div>
       <div class="reveal">
         <span class="eyebrow">Primer videoclip</span>
         <h2>Un debut <span class="grad">arrollador</span></h2>
@@ -395,6 +522,24 @@
       </div>
     </div>
     <div class="wrap">
+      <div class="more-head reveal">
+        <div><span class="eyebrow">En vivo</span><h3>Más videos</h3></div>
+        <a href="https://www.youtube.com/@RetroKumbia_oficial/videos" target="_blank" rel="noopener">Ver el canal en YouTube →</a>
+      </div>
+      <div class="more-videos">
+        <div class="video-card small shine" data-3d="card" data-tilt data-yt="YCIMiDpBnwU" role="button" tabindex="0" aria-label="Reproducir Aquel Hotel (cover), sesión en vivo">
+          <img src="https://i.ytimg.com/vi/YCIMiDpBnwU/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/YCIMiDpBnwU/hqdefault.jpg'" alt="Aquel Hotel (cover), sesión en vivo" loading="lazy">
+          <span class="badge">Sesión en vivo</span>
+          <div class="play"><span><svg><use href="#i-play"/></svg></span></div>
+          <div class="video-label">¡Para bailar! Aquel Hotel (cover)</div>
+        </div>
+        <div class="video-card small shine" data-3d="card" data-tilt data-yt="1A7cIbfOfPQ" role="button" tabindex="0" aria-label="Reproducir Mujeres y cerveza, en vivo">
+          <img src="https://i.ytimg.com/vi/1A7cIbfOfPQ/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/1A7cIbfOfPQ/hqdefault.jpg'" alt="Mujeres y cerveza, en vivo" loading="lazy">
+          <span class="badge">En vivo</span>
+          <div class="play"><span><svg><use href="#i-play"/></svg></span></div>
+          <div class="video-label">Mujeres y cerveza (Grupo Alegría)</div>
+        </div>
+      </div>
       <div class="social">
         <a href="https://www.youtube.com/@RetroKumbia_oficial" target="_blank" rel="noopener" class="shine" data-tilt><span class="ico"><svg><use href="#i-youtube"/></svg></span><span><b>YouTube</b><small>@RetroKumbia_oficial</small></span></a>
         <a href="https://www.instagram.com/retrokumbia_oficial/" target="_blank" rel="noopener" class="shine" data-tilt><span class="ico"><svg><use href="#i-instagram"/></svg></span><span><b>Instagram</b><small>@retrokumbia_oficial</small></span></a>
@@ -465,29 +610,31 @@
         <div class="panel tech reveal">
           <span class="eyebrow">03 · Ficha técnica</span>
           <h3 style="margin-top:12px">Escenario y lista de canales</h3>
-          <p class="muted">22 canales de entrada y 8 mezclas de monitoreo (piso + in-ear). El monitoreo se hace desde la consola de sala. Pasa el mouse o toca una posición para ver sus canales.</p>
-          <div class="tech-meta"><span class="pill">Consola Midas M32</span><span class="pill">Consola Behringer X32</span><span class="pill">2 micrófonos inalámbricos</span><span class="pill">230 V en teclados, batería, guitarra y percusión</span></div>
-          <div class="stage-wrap" id="stageWrap">
-            <div class="stage-view">
-              <div class="stage" id="stage">
-                <div class="stage-floor"></div>
-                <div class="stage-edge"></div>
-                <div class="riser"></div>
-                <div class="wedge" style="left:20%;top:90%"></div><div class="wedge" style="left:40%;top:90%"></div><div class="wedge" style="left:60%;top:90%"></div><div class="wedge" style="left:80%;top:90%"></div>
-                <div class="station" data-st="keys" style="left:17%;top:26%"><div class="spot"></div><div class="bb" tabindex="0" role="button" aria-label="Teclados: IN 12–15 · 20 · IEM 6"><div class="ic"><svg><use href="#i-keys"/></svg></div><div class="lbl"><b>Teclados</b><small>IN 12–15 · 20 · IEM 6</small></div><div class="pole"></div></div></div>
-                <div class="station riser-st" data-st="drums" style="left:50%;top:24%"><div class="spot"></div><div class="bb" tabindex="0" role="button" aria-label="Batería: IN 1–8 · 16 · IEM 7"><div class="ic"><svg><use href="#i-drum"/></svg></div><div class="lbl"><b>Batería</b><small>IN 1–8 · 16 · IEM 7</small></div><div class="pole"></div></div></div>
-                <div class="station" data-st="gtr" style="left:83%;top:26%"><div class="spot"></div><div class="bb" tabindex="0" role="button" aria-label="Guitarra: IN 11 · 19 · IEM 5"><div class="ic"><svg><use href="#i-guitar"/></svg></div><div class="lbl"><b>Guitarra</b><small>IN 11 · 19 · IEM 5</small></div><div class="pole"></div></div></div>
-                <div class="station" data-st="bass" style="left:14%;top:64%"><div class="spot"></div><div class="bb" tabindex="0" role="button" aria-label="Bajo: IN 10 · 18 · IEM 2"><div class="ic"><svg><use href="#i-bass"/></svg></div><div class="lbl"><b>Bajo</b><small>IN 10 · 18 · IEM 2</small></div><div class="pole"></div></div></div>
-                <div class="station" data-st="voz" style="left:37%;top:72%"><div class="spot"></div><div class="bb" tabindex="0" role="button" aria-label="Voz principal: IN 21 · IEM 3"><div class="ic"><svg><use href="#i-mic"/></svg></div><div class="lbl"><b>Voz principal</b><small>IN 21 · IEM 3</small></div><div class="pole"></div></div></div>
-                <div class="station" data-st="anim" style="left:63%;top:72%"><div class="spot"></div><div class="bb" tabindex="0" role="button" aria-label="Voz animación: IN 22 · IEM 8"><div class="ic"><svg><use href="#i-mic"/></svg></div><div class="lbl"><b>Voz animación</b><small>IN 22 · IEM 8</small></div><div class="pole"></div></div></div>
-                <div class="station" data-st="perc" style="left:86%;top:64%"><div class="spot"></div><div class="bb" tabindex="0" role="button" aria-label="Percusión: IN 9 · 17 · IEM 4"><div class="ic"><svg><use href="#i-perc"/></svg></div><div class="lbl"><b>Percusión</b><small>IN 9 · 17 · IEM 4</small></div><div class="pole"></div></div></div>
+          <p class="muted">21 canales de entrada y 7 mezclas de monitoreo (piso + in-ear). El monitoreo se hace desde la consola de sala. Pasa el mouse o toca una posición para ver sus canales.</p>
+          <div class="tech-meta"><span class="pill">Consola Midas M32</span><span class="pill">Consola Behringer X32</span><span class="pill">Micrófono inalámbrico para la voz principal</span><span class="pill">230 V en teclados, batería, guitarra y percusión</span></div>
+          <div class="stage-wrap">
+            <div class="stage-ui">
+              <div class="seg" role="group" aria-label="Vista del escenario">
+                <button type="button" data-view="front" aria-pressed="true">Público</button>
+                <button type="button" data-view="top" aria-pressed="false">Aérea</button>
+                <button type="button" data-view="side" aria-pressed="false">Lateral</button>
+                <button type="button" data-view="auto" aria-pressed="false">360°</button>
+              </div>
+              <div class="zoom" role="group" aria-label="Zoom">
+                <button type="button" data-zoom="-1" aria-label="Alejar">−</button>
+                <button type="button" data-zoom="1" aria-label="Acercar">+</button>
               </div>
             </div>
-            <span class="stage-hint">Arrastra para girar el escenario</span>
+            <div class="stage-view" id="stageView">
+              <div class="stage" id="stage"></div>
+              <div class="stage-labels" id="stageLabels"></div>
+            </div>
+            <aside class="stage-card" id="stageCard" aria-live="polite"></aside>
+            <span class="stage-hint">Arrastra para girar · toca una posición</span>
           </div>
           <div class="io-grid">
-            <div class="io-cols"><table class="io-table"><thead><tr><th>Ch</th><th>Fuente</th><th>Mic / DI</th></tr></thead><tbody><tr data-st="drums"><td>01</td><td>Bombo</td><td>DI</td></tr><tr data-st="drums"><td>02</td><td>Caja</td><td>DI</td></tr><tr data-st="drums"><td>03</td><td>Toms</td><td>DI</td></tr><tr data-st="drums"><td>04</td><td>Hi-hat</td><td>SM81 / P17 / E614</td></tr><tr data-st="drums"><td>05</td><td>Tom high</td><td>E604 / P4 / SM57</td></tr><tr data-st="drums"><td>06</td><td>Tom low</td><td>E604 / P4 / SM57</td></tr><tr data-st="drums"><td>07</td><td>Overhead L</td><td>SM81 / P17 / E614</td></tr><tr data-st="drums"><td>08</td><td>Overhead R</td><td>SM81 / P17 / E614</td></tr><tr data-st="perc"><td>09</td><td>Percusión</td><td>DI</td></tr><tr data-st="bass"><td>10</td><td>Bajo</td><td>DI</td></tr><tr data-st="gtr"><td>11</td><td>Guitarra</td><td>DI</td></tr></tbody></table><table class="io-table"><thead><tr><th>Ch</th><th>Fuente</th><th>Mic / DI</th></tr></thead><tbody><tr data-st="keys"><td>12</td><td>Key Roland L</td><td>DI</td></tr><tr data-st="keys"><td>13</td><td>Key Roland R</td><td>DI</td></tr><tr data-st="keys"><td>14</td><td>Key Korg L</td><td>DI</td></tr><tr data-st="keys"><td>15</td><td>Key Korg R</td><td>DI</td></tr><tr data-st="drums"><td>16</td><td>Voz batería</td><td>SM58</td></tr><tr data-st="perc"><td>17</td><td>Voz percusión</td><td>SM58</td></tr><tr data-st="bass"><td>18</td><td>Voz bajo</td><td>SM58</td></tr><tr data-st="gtr"><td>19</td><td>Voz guitarra</td><td>SM58</td></tr><tr data-st="keys"><td>20</td><td>Voz / talkback teclado</td><td>SM58</td></tr><tr data-st="voz"><td>21</td><td>Voz principal</td><td>Inalámbrico · Beta58 / SM58</td></tr><tr data-st="anim"><td>22</td><td>Voz animación</td><td>Inalámbrico · Beta58 / SM58</td></tr></tbody></table></div>
-            <div><h3 style="font-size:15px">Mezclas de monitoreo</h3><ul class="mix-list"><li data-st=""><span>M1</span>Monitores de piso</li><li data-st="bass"><span>M2</span>IEM Bajo</li><li data-st="voz"><span>M3</span>IEM Voz principal</li><li data-st="perc"><span>M4</span>IEM Percusión</li><li data-st="gtr"><span>M5</span>IEM Guitarra</li><li data-st="keys"><span>M6</span>IEM Teclados</li><li data-st="drums"><span>M7</span>IEM Batería</li><li data-st="anim"><span>M8</span>IEM Voz animación</li></ul></div>
+            <div class="io-cols"><table class="io-table"><thead><tr><th>Ch</th><th>Fuente</th><th>Mic / DI</th></tr></thead><tbody><tr data-st="drums"><td>01</td><td>Bombo</td><td>DI</td></tr><tr data-st="drums"><td>02</td><td>Caja</td><td>DI</td></tr><tr data-st="drums"><td>03</td><td>Toms</td><td>DI</td></tr><tr data-st="drums"><td>04</td><td>Hi-hat</td><td>SM81 / P17 / E614</td></tr><tr data-st="drums"><td>05</td><td>Tom high</td><td>E604 / P4 / SM57</td></tr><tr data-st="drums"><td>06</td><td>Tom low</td><td>E604 / P4 / SM57</td></tr><tr data-st="drums"><td>07</td><td>Overhead L</td><td>SM81 / P17 / E614</td></tr><tr data-st="drums"><td>08</td><td>Overhead R</td><td>SM81 / P17 / E614</td></tr><tr data-st="perc"><td>09</td><td>Percusión</td><td>DI</td></tr><tr data-st="bass"><td>10</td><td>Bajo</td><td>DI</td></tr><tr data-st="gtr"><td>11</td><td>Guitarra</td><td>DI</td></tr></tbody></table><table class="io-table"><thead><tr><th>Ch</th><th>Fuente</th><th>Mic / DI</th></tr></thead><tbody><tr data-st="keys"><td>12</td><td>Key Roland L</td><td>DI</td></tr><tr data-st="keys"><td>13</td><td>Key Roland R</td><td>DI</td></tr><tr data-st="keys"><td>14</td><td>Key Korg L</td><td>DI</td></tr><tr data-st="keys"><td>15</td><td>Key Korg R</td><td>DI</td></tr><tr data-st="drums"><td>16</td><td>Voz batería</td><td>SM58</td></tr><tr data-st="perc"><td>17</td><td>Voz percusión</td><td>SM58</td></tr><tr data-st="bass"><td>18</td><td>Voz bajo</td><td>SM58</td></tr><tr data-st="gtr"><td>19</td><td>Voz guitarra</td><td>SM58</td></tr><tr data-st="keys"><td>20</td><td>Voz / talkback teclado</td><td>SM58</td></tr><tr data-st="voz"><td>21</td><td>Voz principal</td><td>Inalámbrico · Beta58 / SM58</td></tr></tbody></table></div>
+            <div><h3 style="font-size:15px">Mezclas de monitoreo</h3><ul class="mix-list"><li data-st=""><span>M1</span>Monitores de piso</li><li data-st="bass"><span>M2</span>IEM Bajo</li><li data-st="voz"><span>M3</span>IEM Voz principal</li><li data-st="perc"><span>M4</span>IEM Percusión</li><li data-st="gtr"><span>M5</span>IEM Guitarra</li><li data-st="keys"><span>M6</span>IEM Teclados</li><li data-st="drums"><span>M7</span>IEM Batería</li></ul></div>
           </div>
           <button class="tech-link" data-full="img/ficha-tecnica.webp"><img src="img/ficha-tecnica.webp" alt="Ficha técnica original de RetroKumbia" hidden>Ver plano original del dossier</button>
         </div>
@@ -620,6 +767,7 @@
     const t = tiltMap.get(el);
     el.addEventListener('pointermove', e => {
       const r = el.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      if (el.classList.contains('playing')) { t.tx = t.ty = 0; return; }
       t.tx = (py - .5) * -16; t.ty = (px - .5) * 16;
       el.style.setProperty('--mx', px * 100 + '%'); el.style.setProperty('--my', py * 100 + '%');
     });
@@ -690,46 +838,237 @@
     ring.style.transform = `translateZ(${-ring.offsetWidth * 1.42}px)`;
   }
 
-  // ---------- Escenario 3D de la ficha técnica ----------
-  const stageWrap = document.getElementById('stageWrap'), stage = document.getElementById('stage');
-  const techPanel = stageWrap.closest('.tech');
-  let dragRz = 0, dragRx = 0, dragging = false, sx = 0, sy = 0, baseRz = 0, baseRx = 0, curRz = 0, curRx = 58;
-  stageWrap.addEventListener('pointerdown', e => {
-    if (e.target.closest('.bb')) return;
-    dragging = true; sx = e.clientX; sy = e.clientY; baseRz = dragRz; baseRx = dragRx;
-    stageWrap.setPointerCapture(e.pointerId);
+  // ---------- Videos de YouTube: el reproductor se carga solo al hacer clic ----------
+  document.querySelectorAll('[data-yt]').forEach(card => {
+    const play = () => {
+      if (card.classList.contains('playing')) return;
+      card.classList.add('playing');
+      const t = tiltMap.get(card);
+      if (t) t.tx = t.ty = 0;
+      const title = card.getAttribute('aria-label').replace('Reproducir ', '');
+      card.removeAttribute('role'); card.removeAttribute('tabindex');
+      card.insertAdjacentHTML('beforeend', `<iframe src="https://www.youtube-nocookie.com/embed/${card.dataset.yt}?autoplay=1&rel=0" title="${title}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`);
+    };
+    card.addEventListener('click', play);
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); } });
   });
-  stageWrap.addEventListener('pointermove', e => {
-    if (!dragging) return;
-    dragRz = baseRz + (e.clientX - sx) * .3;
-    dragRx = clamp(baseRx + (e.clientY - sy) * -.15, -30, 20);
-  });
-  ['pointerup', 'pointercancel'].forEach(t => stageWrap.addEventListener(t, () => dragging = false));
-  const stageLoop = () => {
-    const r = techPanel.getBoundingClientRect();
-    const p = clamp((innerHeight - r.top) / (innerHeight + r.height));   // avance del scroll sobre el panel
-    const targetRz = (reduce ? 0 : (p - .5) * 50) + dragRz;
-    const targetRx = clamp((reduce ? 58 : 66 - p * 16) + dragRx, 25, 75);
-    curRz = lerp(curRz, targetRz, .1); curRx = lerp(curRx, targetRx, .1);
-    stage.style.setProperty('--rz', curRz.toFixed(2) + 'deg');
-    stage.style.setProperty('--rx', curRx.toFixed(2) + 'deg');
-    requestAnimationFrame(stageLoop);
-  };
-  requestAnimationFrame(stageLoop);
 
-  // Resaltar una posición del escenario junto con sus canales y mezclas
-  const stEls = [...document.querySelectorAll('#rider [data-st]')];
-  const highlight = id => stEls.forEach(el => el.classList.toggle('on', !!id && el.dataset.st === id));
-  stEls.forEach(el => {
-    const id = el.dataset.st;
-    if (!id) return;
-    const target = el.querySelector('.bb') || el;
-    target.addEventListener('pointerenter', () => highlight(id));
-    target.addEventListener('pointerleave', () => highlight(null));
-    target.addEventListener('focus', () => highlight(id));
-    target.addEventListener('blur', () => highlight(null));
-    target.addEventListener('click', () => highlight(id));
+  // ---------- Escenario 3D de la ficha técnica ----------
+  const stage = document.getElementById('stage'), stageView = document.getElementById('stageView');
+  const stageLabels = document.getElementById('stageLabels'), stageCard = document.getElementById('stageCard');
+  const techPanel = stageView.closest('.tech');
+  const STAGE_W = 1000, STAGE_D = 560, DECK_H = 56;
+  const px = v => v + 'px';
+  const mk = (cls, css, parent = stage, html = '') => {
+    const d = document.createElement('div');
+    d.className = cls; Object.assign(d.style, css);
+    if (html) d.innerHTML = html;
+    parent.appendChild(d); return d;
+  };
+  // Caja 3D: huella (x, y, ancho, fondo), alto h y apoyada a la altura z0
+  const box = (cls, x, y, w, d, h, z0 = 0) => {
+    const b = mk('bx ' + cls, {left: px(x), top: px(y), width: px(w), height: px(d), transform: `translateZ(${z0}px)`});
+    mk('f ft', {left: 0, top: 0, width: px(w), height: px(d), transform: `translateZ(${h}px)`}, b);
+    mk('f ff', {left: 0, top: px(d - h), width: px(w), height: px(h), transformOrigin: '50% 100%', transform: 'rotateX(-90deg)'}, b);
+    mk('f fb', {left: 0, top: 0, width: px(w), height: px(h), transformOrigin: '50% 0', transform: 'rotateX(90deg)'}, b);
+    mk('f fl', {left: 0, top: 0, width: px(h), height: px(d), transformOrigin: '0 50%', transform: 'rotateY(-90deg)'}, b);
+    mk('f fr', {left: px(w - h), top: 0, width: px(h), height: px(d), transformOrigin: '100% 50%', transform: 'rotateY(90deg)'}, b);
+    return b;
+  };
+  // Plano vertical con la base centrada en (x, y); con "bill" gira para mirar siempre a la cámara
+  const stand = (cls, x, y, w, h, z0 = 0, bill = false) => mk(cls, {
+    left: px(x - w / 2), top: px(y - h), width: px(w), height: px(h), transformOrigin: '50% 100%',
+    transform: `translateZ(${z0}px)${bill ? ' rotateZ(calc(var(--rz) * -1))' : ''} rotateX(-90deg)`});
+  const disc = (cls, x, y, dia, z) => mk('disc ' + cls, {left: px(x - dia / 2), top: px(y - dia / 2), width: px(dia), height: px(dia), transform: `translateZ(${z}px)`});
+
+  const STATIONS = [
+    {id: 'keys', lh: 175, name: 'Teclados', icon: 'keys', x: 170, y: 105, z: 0, power: true},
+    {id: 'drums', lh: 175, name: 'Batería', icon: 'drum', x: 500, y: 135, z: 30, power: true},
+    {id: 'perc', lh: 175, name: 'Percusión', icon: 'perc', x: 830, y: 135, z: 0, power: true},
+    {id: 'bass', lh: 100, name: 'Bajo', icon: 'bass', x: 165, y: 370, z: 0, wedge: true},
+    {id: 'voz', lh: 100, name: 'Voz principal', icon: 'mic', x: 500, y: 410, z: 0, wedge: true, wireless: true},
+    {id: 'gtr', lh: 100, name: 'Guitarra', icon: 'guitar', x: 835, y: 370, z: 0, wedge: true, power: true},
+  ];
+
+  // Público, tarima y PA
+  mk('ground', {left: '-500px', top: '-240px', width: '2000px', height: '1240px', transform: `translateZ(${-DECK_H}px)`});
+  mk('ground-text', {left: '250px', top: '660px', width: '500px', transform: `translateZ(${1 - DECK_H}px)`}, stage, 'PÚBLICO');
+  box('deck', 0, 0, STAGE_W, STAGE_D, DECK_H, -DECK_H).querySelector('.ff').innerHTML = '<img src="img/logo.webp" alt="">';
+  box('pa', -160, 320, 110, 130, 320, -DECK_H);
+  box('pa', STAGE_W + 50, 320, 110, 130, 320, -DECK_H);
+
+  // Truss, luces y pantalla LED
+  box('truss', 26, 4, 34, 34, 470);
+  box('truss', STAGE_W - 60, 4, 34, 34, 470);
+  box('truss truss-h', 26, 4, STAGE_W - 52, 34, 34, 470);
+  [140, 280, 420, 580, 720, 860].forEach(x => box('fixture', x - 14, 10, 28, 22, 28, 440));
+  box('screen', 190, 6, 620, 14, 300, 100).querySelector('.ff').innerHTML = '<div class="scr"><img src="img/logo.webp" alt=""></div>';
+  [230, 770].forEach(x => stand('cable', x, 13, 2, 70, 400, true));
+
+  // Batería sobre su tarima
+  box('riser', 360, 50, 280, 190, 30);
+  const R = 30;
+  stand('disc kick', 500, 182, 76, 76, R);
+  [[462, 180, 40, 58, 16], [482, 130, 34, 74, 22], [522, 130, 34, 74, 22], [560, 184, 48, 54, 54]].forEach(([x, y, d, z, h]) => {
+    stand('shell', x, y, d, h, R + z - h, true);
+    disc('drum', x, y, d, R + z);
   });
+  [[424, 160, 40, 86], [446, 96, 60, 126], [580, 106, 66, 112]].forEach(([x, y, d, z]) => {
+    stand('pole', x, y, 4, z, R, true);
+    disc('cym', x, y, d, R + z);
+  });
+  disc('cym', 424, 160, 40, R + 81);
+  stand('mic', 540, 214, 18, 110, R, true);
+
+  // Teclados (Roland + Korg)
+  box('kstand', 106, 150, 6, 44, 72);
+  box('kstand', 228, 150, 6, 44, 72);
+  box('keyboard', 98, 150, 144, 46, 9, 72);
+  [112, 228].forEach(x => stand('pole', x, 140, 4, 104, 0, true));
+  box('keyboard k2', 106, 126, 128, 36, 8, 104);
+  stand('mic', 262, 112, 18, 130, 0, true);
+
+  // Percusión (atrás), bajo y guitarra (adelante)
+  [[872, 112, 38, 78], [910, 128, 34, 72]].forEach(([x, y, d, h]) => {
+    stand('conga', x, y, d, h, 0, true);
+    disc('conga-top', x, y, d, h);
+  });
+  stand('mic', 812, 184, 18, 130, 0, true);
+  box('amp', 48, 262, 88, 54, 116);
+  stand('mic', 182, 412, 18, 130, 0, true);
+  box('amp', 866, 266, 88, 46, 74);
+  stand('mic', 818, 412, 18, 130, 0, true);
+  [165, 500, 835].forEach(x => box('wedge', x - 38, 486, 76, 42, 24));
+
+  // Posiciones: haz de luz, zona en el piso, anclas para las etiquetas
+  const marks = STATIONS.map((s, i) => {
+    stand('beam' + (i % 2 ? ' b2' : ''), s.x, s.y, 250, 440, s.z, true).dataset.st = s.id;
+    disc('pad', s.x, s.y, 124, s.z + 1).dataset.st = s.id;
+    const top = mk('anc', {left: px(s.x), top: px(s.y), transform: `translateZ(${s.z + s.lh}px)`});
+    const base = mk('anc', {left: px(s.x), top: px(s.y), transform: `translateZ(${s.z + 2}px)`});
+    const lab = document.createElement('button');
+    lab.type = 'button'; lab.className = 'slabel'; lab.dataset.st = s.id;
+    lab.setAttribute('aria-label', s.name);
+    lab.innerHTML = `<span class="chip"><span class="ic"><svg><use href="#i-${s.icon}"/></svg></span><span class="nm">${s.name}</span></span><span class="stem"></span><span class="dot"></span>`;
+    stageLabels.appendChild(lab);
+    return {top, base, lab, stem: lab.querySelector('.stem')};
+  });
+
+  // Ficha de la posición activa (datos tomados de la tabla de canales)
+  const renderCard = id => {
+    const s = STATIONS.find(st => st.id === id);
+    if (!s) {
+      stageCard.innerHTML = `<div class="card-head"><span class="ic"><svg><use href="#i-mic"/></svg></span><div><small>Stage plot</small><b>Escenario RetroKumbia</b></div></div>
+        <p class="card-note"><b>6</b> posiciones · <b>21</b> canales · <b>7</b> mezclas. Toca una posición o un canal de la lista para ubicarlo.</p>`;
+      return;
+    }
+    const rows = [...document.querySelectorAll(`.io-table tr[data-st="${id}"]`)].map(tr => [...tr.cells].map(td => td.textContent));
+    const mix = document.querySelector(`.mix-list li[data-st="${id}"]`);
+    const tags = [mix && `${mix.firstChild.textContent} · ${mix.lastChild.textContent}`, s.wedge && 'M1 · Monitor de piso',
+      s.power && '230 V', s.wireless && 'Inalámbrico'].filter(Boolean);
+    stageCard.innerHTML = `<div class="card-head"><span class="ic"><svg><use href="#i-${s.icon}"/></svg></span><div><small>Posición</small><b>${s.name}</b></div>
+        ${selected === id ? '<button class="card-x" type="button" aria-label="Quitar selección">×</button>' : ''}</div>
+      <ul class="card-ch">${rows.map(([c, n, m]) => `<li><span>${c}</span>${n}<em>${m}</em></li>`).join('')}</ul>
+      <div class="card-tags">${tags.map(t => `<span>${t}</span>`).join('')}</div>`;
+  };
+
+  // Selección: hover para previsualizar, clic para fijar
+  let hovered = null, selected = null, moved = false;
+  const setActive = () => {
+    const id = hovered || selected;
+    document.querySelectorAll('#rider [data-st]').forEach(el => el.classList.toggle('on', !!id && el.dataset.st === id));
+    stage.classList.toggle('has-sel', !!id);
+    const st = STATIONS.find(x => x.id === id);
+    stageCard.classList.toggle('right', !!st && st.x < STAGE_W / 2);
+    stageView.classList.toggle('has-sel', !!id);
+    renderCard(id);
+  };
+  document.querySelectorAll('#rider [data-st]').forEach(el => {
+    const id = el.dataset.st;
+    if (!id || el.classList.contains('beam')) return;
+    el.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { hovered = id; setActive(); } });
+    el.addEventListener('pointerleave', () => { if (hovered) { hovered = null; setActive(); } });
+    el.addEventListener('focus', () => { hovered = id; setActive(); });
+    el.addEventListener('blur', () => { hovered = null; setActive(); });
+    el.addEventListener('click', e => {
+      e.stopPropagation();
+      if (moved) return;
+      selected = selected === id ? null : id; setActive();
+    });
+  });
+  stageCard.addEventListener('click', e => { if (e.target.closest('.card-x')) { selected = null; hovered = null; setActive(); } });
+  stageView.addEventListener('click', () => { if (!moved && selected) { selected = null; setActive(); } });
+
+  // Cámara: vistas, arrastre, zoom, 360° y un leve giro con el scroll
+  const VIEWS = {front: {rx: 60, rz: 0}, top: {rx: 14, rz: 0}, side: {rx: 62, rz: -50}, auto: {rx: 56, rz: 0}};
+  let view = 'front', dragRx = 0, dragRz = 0, spin = 0, zoom = 1, baseK = .8;
+  let curRx = 60, curRz = 0, last = '';
+  const viewBtns = document.querySelectorAll('.seg [data-view]');
+  const setView = v => {
+    view = v; dragRx = dragRz = spin = 0;
+    curRz -= 360 * Math.round((curRz - VIEWS[v].rz) / 360);
+    viewBtns.forEach(b => b.setAttribute('aria-pressed', b.dataset.view === v));
+  };
+  viewBtns.forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
+  document.querySelectorAll('.zoom [data-zoom]').forEach(b => b.addEventListener('click', () => {
+    zoom = clamp(zoom * (b.dataset.zoom > 0 ? 1.2 : 1 / 1.2), .7, 2.2);
+  }));
+
+  let drag = null;
+  stageView.addEventListener('pointerdown', e => {
+    moved = false;
+    if (e.target.closest('.slabel')) return;
+    drag = {x: e.clientX, y: e.clientY, rx: dragRx, rz: dragRz, id: e.pointerId};
+  });
+  stageView.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (!moved && Math.hypot(dx, dy) > 6) {
+      moved = true; stageView.classList.add('dragging');
+      stageView.setPointerCapture(drag.id);
+    }
+    if (moved) { dragRz = drag.rz + dx * .35; dragRx = drag.rx - dy * .2; }
+  });
+  const endDrag = () => { drag = null; stageView.classList.remove('dragging'); };
+  stageView.addEventListener('pointerup', endDrag);
+  stageView.addEventListener('pointercancel', endDrag);
+
+  const sizeStage = () => {
+    const w = stageView.clientWidth, h = stageView.clientHeight;
+    baseK = w < 600 ? Math.min(w / 1000, h / 740) : Math.min(w / 1500, h / 900);
+  };
+  addEventListener('resize', sizeStage); sizeStage();
+
+  const stageFrame = () => {
+    requestAnimationFrame(stageFrame);
+    const r = techPanel.getBoundingClientRect();
+    if (r.bottom < -50 || r.top > innerHeight + 50) return;
+    const v = VIEWS[view];
+    if (view === 'auto' && !drag && !reduce) spin += .25;
+    const scrollRz = reduce ? 0 : (clamp((innerHeight - r.top) / (innerHeight + r.height)) - .5) * 24;
+    const tRx = clamp(v.rx + dragRx, 8, 80), tRz = v.rz + dragRz + spin + scrollRz;
+    curRx = lerp(curRx, tRx, .1); curRz = lerp(curRz, tRz, .1);
+    const k = baseK * zoom;
+    const key = `${curRx.toFixed(2)}|${curRz.toFixed(2)}|${k.toFixed(4)}`;
+    if (key === last) return;
+    last = key;
+    stage.style.setProperty('--rx', curRx.toFixed(2) + 'deg');
+    stage.style.setProperty('--rz', curRz.toFixed(2) + 'deg');
+    stage.style.setProperty('--k', k.toFixed(4));
+    stage.style.setProperty('--ty', (205 * k * Math.sin(curRx * Math.PI / 180)).toFixed(1) + 'px');
+    stageView.style.perspective = (2400 * k).toFixed(0) + 'px';
+    // Las etiquetas se ubican proyectando las anclas 3D
+    const vr = stageView.getBoundingClientRect();
+    marks.forEach(m => {
+      const t = m.top.getBoundingClientRect(), b = m.base.getBoundingClientRect();
+      const x = b.left + b.width / 2 - vr.left, y = b.top + b.height / 2 - vr.top;
+      m.stem.style.height = Math.max(8, y - (t.top + t.height / 2 - vr.top)) + 'px';
+      m.lab.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) translate(-50%,-100%)`;
+      m.lab.style.zIndex = Math.round(y);
+    });
+  };
+  renderCard(null);
+  requestAnimationFrame(stageFrame);
 
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
