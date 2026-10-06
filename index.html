@@ -158,8 +158,59 @@
   .check li::before{content:"";flex:none;width:20px;height:20px;margin-top:3px;border-radius:6px;background:var(--gold) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231a0d05' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E") center/13px no-repeat}
   .pill{display:inline-block;margin-top:8px;padding:6px 12px;border-radius:999px;background:rgba(245,192,74,.14);color:var(--gold-2);font-size:14px;font-weight:500}
   .tech{grid-column:1/-1}
-  .tech-img{display:block;margin-top:18px;border-radius:12px;overflow:hidden;background:#fff;cursor:zoom-in}
-  .tech-img img{width:100%}
+  .tech-link{background:none;border:0;color:var(--gold-2);font:500 14px/1 var(--body);text-decoration:underline;text-underline-offset:3px;cursor:zoom-in;margin-top:18px}
+  .tech-link img{display:none}
+
+  /* Escenario 3D (stage plot) */
+  .stage-wrap{margin-top:22px;border-radius:16px;overflow:hidden;position:relative;cursor:grab;touch-action:pan-y;user-select:none;
+    background:radial-gradient(ellipse at 50% 0,rgba(255,138,61,.18),transparent 60%),#040b0c;border:1px solid var(--line)}
+  .stage-wrap:active{cursor:grabbing}
+  .stage-view{perspective:1100px;perspective-origin:50% 20%;height:clamp(340px,52vw,560px);display:grid;place-items:center}
+  .stage{--rx:58deg;--rz:0deg;position:relative;width:min(860px,88%);aspect-ratio:16/9;transform-style:preserve-3d;
+    transform:translateY(6%) rotateX(var(--rx)) rotateZ(var(--rz))}
+  .stage-floor{position:absolute;inset:0;border-radius:10px;
+    background:repeating-linear-gradient(90deg,#1a2a2d 0 2px,#13211f 2px 46px);
+    box-shadow:0 0 0 2px rgba(245,192,74,.35),0 40px 80px rgba(0,0,0,.6)}
+  .stage-floor::after{content:"PÚBLICO";position:absolute;left:50%;bottom:-11%;translate:-50% 0;font:800 13px/1 var(--display);letter-spacing:.5em;color:rgba(245,192,74,.6)}
+  .stage-edge{position:absolute;left:0;right:0;bottom:0;height:34px;transform-origin:bottom;transform:rotateX(-90deg);
+    background:linear-gradient(#2a1a0e,#0d0805);border-radius:0 0 6px 6px}
+  .riser{position:absolute;left:36%;top:6%;width:28%;height:34%;transform:translateZ(16px);background:#22332f;border-radius:6px;box-shadow:0 0 0 1px rgba(255,255,255,.08)}
+  .wedge{position:absolute;width:6%;aspect-ratio:1.4;translate:-50% -50%;transform:translateZ(6px);background:#0a0f10;border-radius:3px;box-shadow:inset 0 0 0 2px #2c3b3d}
+  .station{position:absolute;width:0;height:0;transform-style:preserve-3d}
+  .station .spot{position:absolute;width:90px;height:90px;left:-45px;top:-45px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,197,49,.5),rgba(255,138,61,.12) 45%,transparent 70%);transition:opacity .3s,transform .3s;opacity:.55}
+  .station.riser-st{transform:translateZ(16px)}
+  .bb{position:absolute;left:0;top:0;transform-origin:50% 100%;
+    transform:translate(-50%,-100%) rotateZ(calc(var(--rz) * -1)) rotateX(calc(var(--rx) * -1));
+    display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
+  .bb .pole{width:2px;height:30px;background:linear-gradient(var(--gold),transparent)}
+  .bb .ic{width:54px;height:54px;border-radius:12px;background:var(--sunset);color:#1a0d05;display:grid;place-items:center;
+    box-shadow:0 10px 20px -6px rgba(0,0,0,.7);transition:transform .25s}
+  .bb .ic svg{width:28px;height:28px}
+  .bb .lbl{background:rgba(6,17,19,.92);border:1px solid var(--line);border-radius:8px;padding:5px 9px;text-align:center;white-space:nowrap;transition:border-color .25s}
+  .bb .lbl b{display:block;font:600 13px/1.2 var(--display);letter-spacing:.04em}
+  .bb .lbl small{font-size:12px;color:var(--muted)}
+  .station.on .spot{opacity:1;transform:scale(1.35)}
+  .station.on .ic{transform:translateY(-6px) scale(1.12)}
+  .station.on .lbl{border-color:var(--gold)}
+  .stage-hint{position:absolute;left:14px;bottom:12px;font-size:12px;color:var(--muted);pointer-events:none}
+  @media (max-width:640px){.stage{width:94%;aspect-ratio:1/1.05}.stage-view{height:440px;perspective:700px}.stage-floor::after{bottom:-8%}.bb .lbl small{display:none}.bb .ic{width:32px;height:32px;border-radius:9px}.bb .ic svg{width:18px;height:18px}.bb .lbl b{font-size:8px}.bb .lbl{padding:3px 5px}.bb .pole{height:10px}.bb{gap:3px}}
+
+  /* Input list */
+  .io-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:28px;margin-top:26px}
+  .io-table{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:12px}
+  .io-table th{font:600 11px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 10px 10px}
+  .io-table td{padding:8px 10px;border-top:1px solid var(--line);transition:background .2s,color .2s}
+  .io-table td:first-child{font:800 13px/1 var(--display);color:var(--gold);width:44px}
+  .io-table td:last-child{color:var(--muted);font-size:13px}
+  .io-table tr.on td{background:rgba(245,192,74,.12);color:var(--text)}
+  .io-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+  .mix-list{list-style:none;display:grid;gap:6px;margin-top:10px}
+  .mix-list li{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;transition:border-color .2s,background .2s}
+  .mix-list li span{font:800 12px/1 var(--display);color:#1a0d05;background:var(--gold);border-radius:6px;padding:5px 7px}
+  .mix-list li.on{border-color:var(--gold);background:rgba(245,192,74,.1)}
+  @media (max-width:1000px){.io-grid{grid-template-columns:1fr}}
+  @media (max-width:640px){.io-cols{grid-template-columns:1fr}}
   .tech-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
   @media (max-width:860px){.rider-grid{grid-template-columns:1fr}}
 
@@ -411,12 +462,34 @@
             <li>Alojamiento, si corresponde.</li>
           </ul>
         </div>
-        <div class="panel tech s3d" data-3d="rise">
+        <div class="panel tech reveal">
           <span class="eyebrow">03 · Ficha técnica</span>
-          <h3 style="margin-top:12px">Stage plot e input list</h3>
-          <p class="muted">22 canales de entrada y 8 mezclas de monitoreo in-ear (IEM). El monitoreo se hace desde la consola de sala.</p>
-          <div class="tech-meta"><span class="pill">Consola Midas M32</span><span class="pill">Consola Behringer X32</span><span class="pill">2 micrófonos inalámbricos</span></div>
-          <button class="tech-img" data-full="img/ficha-tecnica.webp" aria-label="Ampliar ficha técnica" style="border:0;padding:0;width:100%"><img src="img/ficha-tecnica.webp" alt="Ficha técnica: plano de escenario y lista de canales de RetroKumbia" loading="lazy"></button>
+          <h3 style="margin-top:12px">Escenario y lista de canales</h3>
+          <p class="muted">22 canales de entrada y 8 mezclas de monitoreo (piso + in-ear). El monitoreo se hace desde la consola de sala. Pasa el mouse o toca una posición para ver sus canales.</p>
+          <div class="tech-meta"><span class="pill">Consola Midas M32</span><span class="pill">Consola Behringer X32</span><span class="pill">2 micrófonos inalámbricos</span><span class="pill">230 V en teclados, batería, guitarra y percusión</span></div>
+          <div class="stage-wrap" id="stageWrap">
+            <div class="stage-view">
+              <div class="stage" id="stage">
+                <div class="stage-floor"></div>
+                <div class="stage-edge"></div>
+                <div class="riser"></div>
+                <div class="wedge" style="left:20%;top:90%"></div><div class="wedge" style="left:40%;top:90%"></div><div class="wedge" style="left:60%;top:90%"></div><div class="wedge" style="left:80%;top:90%"></div>
+                <div class="station" data-st="keys" style="left:17%;top:26%"><div class="spot"></div><div class="bb" tabindex="0" role="button" aria-label="Teclados: IN 12–15 · 20 · IEM 6"><div class="ic"><svg><use href="#i-keys"/></svg></div><div class="lbl"><b>Teclados</b><small>IN 12–15 · 20 · IEM 6</small></div><div class="pole"></div></div></div>
+                <div class="station riser-st" data-st="drums" style="left:50%;top:24%"><div class="spot"></div><div class="bb" tabindex="0" role="button" aria-label="Batería: IN 1–8 · 16 · IEM 7"><div class="ic"><svg><use href="#i-drum"/></svg></div><div class="lbl"><b>Batería</b><small>IN 1–8 · 16 · IEM 7</small></div><div class="pole"></div></div></div>
+                <div class="station" data-st="gtr" style="left:83%;top:26%"><div class="spot"></div><div class="bb" tabindex="0" role="button" aria-label="Guitarra: IN 11 · 19 · IEM 5"><div class="ic"><svg><use href="#i-guitar"/></svg></div><div class="lbl"><b>Guitarra</b><small>IN 11 · 19 · IEM 5</small></div><div class="pole"></div></div></div>
+                <div class="station" data-st="bass" style="left:14%;top:64%"><div class="spot"></div><div class="bb" tabindex="0" role="button" aria-label="Bajo: IN 10 · 18 · IEM 2"><div class="ic"><svg><use href="#i-bass"/></svg></div><div class="lbl"><b>Bajo</b><small>IN 10 · 18 · IEM 2</small></div><div class="pole"></div></div></div>
+                <div class="station" data-st="voz" style="left:37%;top:72%"><div class="spot"></div><div class="bb" tabindex="0" role="button" aria-label="Voz principal: IN 21 · IEM 3"><div class="ic"><svg><use href="#i-mic"/></svg></div><div class="lbl"><b>Voz principal</b><small>IN 21 · IEM 3</small></div><div class="pole"></div></div></div>
+                <div class="station" data-st="anim" style="left:63%;top:72%"><div class="spot"></div><div class="bb" tabindex="0" role="button" aria-label="Voz animación: IN 22 · IEM 8"><div class="ic"><svg><use href="#i-mic"/></svg></div><div class="lbl"><b>Voz animación</b><small>IN 22 · IEM 8</small></div><div class="pole"></div></div></div>
+                <div class="station" data-st="perc" style="left:86%;top:64%"><div class="spot"></div><div class="bb" tabindex="0" role="button" aria-label="Percusión: IN 9 · 17 · IEM 4"><div class="ic"><svg><use href="#i-perc"/></svg></div><div class="lbl"><b>Percusión</b><small>IN 9 · 17 · IEM 4</small></div><div class="pole"></div></div></div>
+              </div>
+            </div>
+            <span class="stage-hint">Arrastra para girar el escenario</span>
+          </div>
+          <div class="io-grid">
+            <div class="io-cols"><table class="io-table"><thead><tr><th>Ch</th><th>Fuente</th><th>Mic / DI</th></tr></thead><tbody><tr data-st="drums"><td>01</td><td>Bombo</td><td>DI</td></tr><tr data-st="drums"><td>02</td><td>Caja</td><td>DI</td></tr><tr data-st="drums"><td>03</td><td>Toms</td><td>DI</td></tr><tr data-st="drums"><td>04</td><td>Hi-hat</td><td>SM81 / P17 / E614</td></tr><tr data-st="drums"><td>05</td><td>Tom high</td><td>E604 / P4 / SM57</td></tr><tr data-st="drums"><td>06</td><td>Tom low</td><td>E604 / P4 / SM57</td></tr><tr data-st="drums"><td>07</td><td>Overhead L</td><td>SM81 / P17 / E614</td></tr><tr data-st="drums"><td>08</td><td>Overhead R</td><td>SM81 / P17 / E614</td></tr><tr data-st="perc"><td>09</td><td>Percusión</td><td>DI</td></tr><tr data-st="bass"><td>10</td><td>Bajo</td><td>DI</td></tr><tr data-st="gtr"><td>11</td><td>Guitarra</td><td>DI</td></tr></tbody></table><table class="io-table"><thead><tr><th>Ch</th><th>Fuente</th><th>Mic / DI</th></tr></thead><tbody><tr data-st="keys"><td>12</td><td>Key Roland L</td><td>DI</td></tr><tr data-st="keys"><td>13</td><td>Key Roland R</td><td>DI</td></tr><tr data-st="keys"><td>14</td><td>Key Korg L</td><td>DI</td></tr><tr data-st="keys"><td>15</td><td>Key Korg R</td><td>DI</td></tr><tr data-st="drums"><td>16</td><td>Voz batería</td><td>SM58</td></tr><tr data-st="perc"><td>17</td><td>Voz percusión</td><td>SM58</td></tr><tr data-st="bass"><td>18</td><td>Voz bajo</td><td>SM58</td></tr><tr data-st="gtr"><td>19</td><td>Voz guitarra</td><td>SM58</td></tr><tr data-st="keys"><td>20</td><td>Voz / talkback teclado</td><td>SM58</td></tr><tr data-st="voz"><td>21</td><td>Voz principal</td><td>Inalámbrico · Beta58 / SM58</td></tr><tr data-st="anim"><td>22</td><td>Voz animación</td><td>Inalámbrico · Beta58 / SM58</td></tr></tbody></table></div>
+            <div><h3 style="font-size:15px">Mezclas de monitoreo</h3><ul class="mix-list"><li data-st=""><span>M1</span>Monitores de piso</li><li data-st="bass"><span>M2</span>IEM Bajo</li><li data-st="voz"><span>M3</span>IEM Voz principal</li><li data-st="perc"><span>M4</span>IEM Percusión</li><li data-st="gtr"><span>M5</span>IEM Guitarra</li><li data-st="keys"><span>M6</span>IEM Teclados</li><li data-st="drums"><span>M7</span>IEM Batería</li><li data-st="anim"><span>M8</span>IEM Voz animación</li></ul></div>
+          </div>
+          <button class="tech-link" data-full="img/ficha-tecnica.webp"><img src="img/ficha-tecnica.webp" alt="Ficha técnica original de RetroKumbia" hidden>Ver plano original del dossier</button>
         </div>
       </div>
     </div>
@@ -493,7 +566,7 @@
   // Aparición al hacer scroll
   const io = new IntersectionObserver(entries => entries.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-  }), {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+  }), {threshold:0, rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.reveal').forEach((el, i) => {
     el.style.transitionDelay = (el.parentElement.classList.contains('members') || el.parentElement.classList.contains('svc-grid') ? (i % 6) * 70 : 0) + 'ms';
     io.observe(el);
@@ -511,7 +584,7 @@
   const close = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
   const galleryItems = [...document.querySelectorAll('#gallery button')];
   galleryItems.forEach((b, i) => b.addEventListener('click', () => open(galleryItems, i)));
-  document.querySelectorAll('.tech-img').forEach(b => b.addEventListener('click', () => open([b], 0)));
+  document.querySelectorAll('.tech-link').forEach(b => b.addEventListener('click', () => open([b], 0)));
   prev.onclick = () => show(idx - 1); next.onclick = () => show(idx + 1);
   document.getElementById('lbClose').onclick = close;
   lb.addEventListener('click', e => { if (e.target === lb) close(); });
@@ -616,6 +689,47 @@
   } else {
     ring.style.transform = `translateZ(${-ring.offsetWidth * 1.42}px)`;
   }
+
+  // ---------- Escenario 3D de la ficha técnica ----------
+  const stageWrap = document.getElementById('stageWrap'), stage = document.getElementById('stage');
+  const techPanel = stageWrap.closest('.tech');
+  let dragRz = 0, dragRx = 0, dragging = false, sx = 0, sy = 0, baseRz = 0, baseRx = 0, curRz = 0, curRx = 58;
+  stageWrap.addEventListener('pointerdown', e => {
+    if (e.target.closest('.bb')) return;
+    dragging = true; sx = e.clientX; sy = e.clientY; baseRz = dragRz; baseRx = dragRx;
+    stageWrap.setPointerCapture(e.pointerId);
+  });
+  stageWrap.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    dragRz = baseRz + (e.clientX - sx) * .3;
+    dragRx = clamp(baseRx + (e.clientY - sy) * -.15, -30, 20);
+  });
+  ['pointerup', 'pointercancel'].forEach(t => stageWrap.addEventListener(t, () => dragging = false));
+  const stageLoop = () => {
+    const r = techPanel.getBoundingClientRect();
+    const p = clamp((innerHeight - r.top) / (innerHeight + r.height));   // avance del scroll sobre el panel
+    const targetRz = (reduce ? 0 : (p - .5) * 50) + dragRz;
+    const targetRx = clamp((reduce ? 58 : 66 - p * 16) + dragRx, 25, 75);
+    curRz = lerp(curRz, targetRz, .1); curRx = lerp(curRx, targetRx, .1);
+    stage.style.setProperty('--rz', curRz.toFixed(2) + 'deg');
+    stage.style.setProperty('--rx', curRx.toFixed(2) + 'deg');
+    requestAnimationFrame(stageLoop);
+  };
+  requestAnimationFrame(stageLoop);
+
+  // Resaltar una posición del escenario junto con sus canales y mezclas
+  const stEls = [...document.querySelectorAll('#rider [data-st]')];
+  const highlight = id => stEls.forEach(el => el.classList.toggle('on', !!id && el.dataset.st === id));
+  stEls.forEach(el => {
+    const id = el.dataset.st;
+    if (!id) return;
+    const target = el.querySelector('.bb') || el;
+    target.addEventListener('pointerenter', () => highlight(id));
+    target.addEventListener('pointerleave', () => highlight(null));
+    target.addEventListener('focus', () => highlight(id));
+    target.addEventListener('blur', () => highlight(null));
+    target.addEventListener('click', () => highlight(id));
+  });
 
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
