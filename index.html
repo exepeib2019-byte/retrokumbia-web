@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RetroKumbia</title>
+<meta name="description" content="RetroKumbia: banda de cumbia chilena desde Lebu. Los éxitos de la movida tropical chilena y argentina de los 90 y 2000 en vivo. Contrataciones para eventos, municipios, festivales y fiestas privadas.">
+<meta property="og:title" content="RetroKumbia · Banda de cumbia chilena">
+<meta property="og:description" content="Los éxitos de la movida tropical de los 90 y 2000, en vivo. Contrataciones: +56 9 5402 1040">
+<meta property="og:image" content="img/hero.webp">
+<meta name="theme-color" content="#061113">
+<link rel="icon" href="img/logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#061113; --bg-2:#0b1c1f; --line:rgba(255,255,255,.12);
+    --text:#f3efe6; --muted:#a9b3b2;
+    --gold:#f5c04a; --gold-2:#ffde85; --orange:#ff7a3d; --pink:#ff5a6e;
+    --sunset:linear-gradient(120deg,#ffc531 0%,#ff8a3d 55%,#ff5a6e 100%);
+    --radius:18px; --max:1180px;
+    --display:"Unbounded",system-ui,sans-serif; --body:"DM Sans",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:72px}
+  body{background:var(--bg);color:var(--text);font:400 17px/1.65 var(--body);-webkit-font-smoothing:antialiased;overflow-x:clip}
+  img{display:block;max-width:100%;height:auto}
+  a{color:inherit}
+  .wrap{width:min(var(--max),100% - 32px);margin-inline:auto}
+  section{padding:clamp(72px,10vw,128px) 0;position:relative}
+  .eyebrow{font:600 12px/1 var(--display);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+  h2{font:800 clamp(30px,5vw,54px)/1.05 var(--display);letter-spacing:-.01em;margin:14px 0 22px;text-transform:uppercase}
+  h3{font:600 18px/1.3 var(--display);margin-bottom:10px}
+  p+p{margin-top:1em}
+  .lead{font-size:clamp(18px,2vw,21px);color:#dfe3df;max-width:62ch}
+  .muted{color:var(--muted)}
+  .grad{background:var(--sunset);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* Botones */
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:999px;font:700 15px/1 var(--body);text-decoration:none;transition:transform .2s,box-shadow .2s,background .2s}
+  .btn-primary{background:var(--sunset);color:#1a0d05;box-shadow:0 10px 30px -10px rgba(255,122,61,.7)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 36px -10px rgba(255,122,61,.9)}
+  .btn-ghost{border:1.5px solid rgba(255,255,255,.35);color:var(--text)}
+  .btn-ghost:hover{background:rgba(255,255,255,.08);border-color:#fff}
+  .btn svg{width:18px;height:18px;flex:none}
+
+  /* Navegación */
+  .nav{position:fixed;inset:0 0 auto;z-index:50;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+  .nav.scrolled{background:rgba(6,17,19,.86);backdrop-filter:blur(12px);border-color:var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .nav-logo img{height:38px;width:auto}
+  .nav ul{display:flex;gap:28px;list-style:none}
+  .nav ul a{text-decoration:none;font-weight:500;font-size:15px;color:#d8dcd8;transition:color .2s}
+  .nav ul a:hover{color:var(--gold)}
+  .nav .btn{padding:10px 18px;font-size:14px}
+  .menu-btn{display:none;background:none;border:0;color:var(--text);width:44px;height:44px;cursor:pointer}
+  @media (max-width:900px){
+    .nav ul{position:fixed;inset:68px 0 auto;flex-direction:column;gap:0;background:rgba(6,17,19,.97);border-bottom:1px solid var(--line);padding:8px 16px 20px;transform:translateY(-130%);transition:transform .35s;z-index:-1}
+    .nav.open ul{transform:none}
+    .nav ul a{display:block;padding:14px 0;font-size:18px;border-bottom:1px solid var(--line)}
+    .nav .nav-cta{display:none}
+    .menu-btn{display:grid;place-items:center}
+    .nav:not(.scrolled).open{background:rgba(6,17,19,.97)}
+  }
+
+  /* Hero */
+  .hero{min-height:100svh;display:grid;place-items:center;text-align:center;padding:110px 0 80px;isolation:isolate;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:-2}
+  .hero-bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.08)}
+  @keyframes drift{to{transform:scale(1.16) translate(-1.5%,-1%)}}
+  .hero::before{content:"";position:absolute;inset:0;z-index:-1;background:
+    radial-gradient(ellipse at 50% 45%,rgba(6,17,19,.25),rgba(6,17,19,.8) 70%),
+    linear-gradient(to bottom,rgba(6,17,19,.55),transparent 30%,transparent 60%,var(--bg))}
+  .hero-logo{width:min(720px,92%);margin:0 auto;filter:drop-shadow(0 18px 40px rgba(0,0,0,.6));animation:rise 1s cubic-bezier(.2,.8,.2,1) both}
+  .hero-tag{font:600 clamp(13px,1.6vw,16px)/1.4 var(--display);letter-spacing:.2em;text-transform:uppercase;margin:26px 0 8px;color:var(--gold-2);animation:rise 1s .15s cubic-bezier(.2,.8,.2,1) both}
+  .hero-sub{font-size:clamp(17px,2vw,20px);max-width:46ch;margin:0 auto 34px;color:#e8e6df;animation:rise 1s .25s cubic-bezier(.2,.8,.2,1) both}
+  .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:rise 1s .35s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes rise{from{opacity:0;transform:translateY(24px)}}
+  .scroll-cue{position:absolute;bottom:28px;left:50%;translate:-50% 0;width:26px;height:42px;border:2px solid rgba(255,255,255,.45);border-radius:20px}
+  .scroll-cue::after{content:"";position:absolute;left:50%;top:8px;width:4px;height:8px;border-radius:2px;background:#fff;translate:-50% 0;animation:cue 1.6s infinite}
+  @keyframes cue{to{transform:translateY(14px);opacity:0}}
+
+  /* Cinta */
+  .ticker{background:var(--sunset);color:#1a0d05;overflow:hidden;padding:14px 0;transform:rotate(-1.2deg);margin:-28px -10px 0;position:relative;z-index:2}
+  .ticker-track{display:flex;gap:40px;width:max-content;will-change:transform;font:800 18px/1 var(--display);text-transform:uppercase;white-space:nowrap}
+  .ticker-track span::after{content:"✦";margin-left:40px}
+  @keyframes tick{to{transform:translateX(-50%)}}
+
+  /* Intro */
+  .intro-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,6vw,80px);align-items:center}
+  .intro-img{position:relative}
+  .intro-img img{border-radius:var(--radius);aspect-ratio:4/5;object-fit:cover;width:100%}
+  .intro-img::before{content:"";position:absolute;inset:18px -18px -18px 18px;border-radius:var(--radius);background:var(--sunset);z-index:-1}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+  .tags li{list-style:none;border:1px solid var(--line);background:var(--bg-2);padding:8px 14px;border-radius:999px;font-size:14px;color:#d6dbd8}
+  @media (max-width:860px){.intro-grid{grid-template-columns:1fr}.intro-img{max-width:440px}}
+
+  /* Banda */
+  .band{background:var(--bg-2);overflow:hidden}
+  .band::before{content:"";position:absolute;inset:0;background:repeating-radial-gradient(circle at 100% 0,transparent 0 22px,rgba(255,255,255,.035) 22px 23px);pointer-events:none}
+  .band-head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:48px}
+  .band-photo{background:var(--sunset);border-radius:var(--radius);padding:clamp(24px,4vw,48px) clamp(16px,3vw,40px) clamp(16px,2vw,28px);margin-bottom:40px;clip-path:polygon(0 6%,100% 0,100% 94%,0 100%)}
+  .band-photo img{margin:0 auto;width:min(760px,100%);filter:drop-shadow(0 14px 22px rgba(80,20,0,.35))}
+  .members{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+  .member{border:1px solid var(--line);border-radius:14px;padding:20px 16px;background:rgba(6,17,19,.6);transition:border-color .25s}
+  .member:hover{border-color:var(--gold)}
+  .member .role{font:600 11px/1 var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+  .member .name{font-weight:700;font-size:17px;margin-top:10px;line-height:1.25}
+  .member svg{width:28px;height:28px;color:var(--orange);margin-bottom:14px}
+  @media (max-width:1000px){.members{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:760px){.band-head{grid-template-columns:1fr;gap:0}}
+  @media (max-width:520px){.members{grid-template-columns:repeat(2,1fr)}}
+
+  /* Videoclip */
+  .video-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(32px,5vw,64px);align-items:center}
+  .video-card{position:relative;display:block;border-radius:var(--radius);overflow:hidden;text-decoration:none;aspect-ratio:16/9;background:#000}
+  .video-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s,opacity .3s;opacity:.85}
+  .video-card:hover img{transform:scale(1.04);opacity:1}
+  .play{position:absolute;inset:0;display:grid;place-items:center}
+  .play span{width:84px;height:84px;border-radius:50%;background:var(--sunset);display:grid;place-items:center;box-shadow:0 0 0 0 rgba(255,138,61,.6);animation:pulse 2.2s infinite}
+  .play svg{width:30px;height:30px;margin-left:5px;color:#1a0d05}
+  @keyframes pulse{70%{box-shadow:0 0 0 22px rgba(255,138,61,0)}100%{box-shadow:0 0 0 0 rgba(255,138,61,0)}}
+  .video-label{position:absolute;left:0;right:0;bottom:0;padding:40px 20px 16px;background:linear-gradient(transparent,rgba(0,0,0,.85));font:600 15px/1.3 var(--display)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:30px}
+  .stat{border-left:2px solid var(--gold);padding-left:14px}
+  .stat b{display:block;font:800 clamp(24px,3vw,32px)/1 var(--display)}
+  .stat small{font-size:13px;color:var(--muted)}
+  @media (max-width:860px){.video-grid{grid-template-columns:1fr}}
+
+  /* Redes */
+  .social{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+  .social a{display:flex;align-items:center;gap:16px;padding:22px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg-2);text-decoration:none;transition:border-color .25s,background .25s}
+  .social a:hover{border-color:var(--gold);transform:translateY(-3px);background:#0f2428}
+  .social .ico{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;flex:none;background:var(--sunset);color:#1a0d05}
+  .social .ico svg{width:26px;height:26px}
+  .social b{display:block;font-size:17px}
+  .social small{color:var(--muted);font-size:14px}
+  @media (max-width:860px){.social{grid-template-columns:1fr}}
+
+  /* Servicios */
+  .services{background:var(--bg-2)}
+  .svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:40px}
+  .svc{padding:26px;border-radius:var(--radius);border:1px solid var(--line);background:var(--bg)}
+  .svc .num{font:800 14px/1 var(--display);color:var(--gold);margin-bottom:16px;display:block}
+  .svc p{color:#cfd5d2;font-size:16px}
+  .duration{margin-top:28px;display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,4vw,48px);align-items:center;padding:clamp(24px,4vw,40px);border-radius:var(--radius);background:var(--sunset);color:#1a0d05}
+  .duration .big{font:800 clamp(64px,10vw,120px)/.9 var(--display);letter-spacing:-.03em}
+  .duration .big small{font-size:.28em;letter-spacing:0;display:block;margin-top:6px}
+  .duration h3{font-size:20px}
+  @media (max-width:640px){.duration{grid-template-columns:1fr}}
+
+  /* Rider */
+  .rider-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px}
+  .panel{border:1px solid var(--line);border-radius:var(--radius);padding:clamp(22px,3vw,34px);background:var(--bg-2)}
+  .check{list-style:none;margin-top:16px;display:grid;gap:10px}
+  .check li{display:flex;gap:12px;color:#d6dbd8}
+  .check li::before{content:"";flex:none;width:20px;height:20px;margin-top:3px;border-radius:6px;background:var(--gold) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231a0d05' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E") center/13px no-repeat}
+  .pill{display:inline-block;margin-top:8px;padding:6px 12px;border-radius:999px;background:rgba(245,192,74,.14);color:var(--gold-2);font-size:14px;font-weight:500}
+  .tech{grid-column:1/-1}
+  .tech-img{display:block;margin-top:18px;border-radius:12px;overflow:hidden;background:#fff;cursor:zoom-in}
+  .tech-img img{width:100%}
+  .tech-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  @media (max-width:860px){.rider-grid{grid-template-columns:1fr}}
+
+  /* Galería: carrusel 3D que gira con el scroll */
+  .ring-sec{height:340vh;padding:0}
+  .ring-sticky{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding-top:68px}
+  .ring-sticky .wrap{text-align:center}
+  .ring-sticky h2{margin-bottom:0}
+  .ring-stage{--w:min(440px,58vw);--r:calc(var(--w) * 1.42);flex:1;display:grid;place-items:center;perspective:1300px;perspective-origin:50% 40%;max-height:62vh}
+  .ring{position:relative;width:var(--w);aspect-ratio:16/10;transform-style:preserve-3d;will-change:transform}
+  .ring button{position:absolute;inset:0;border:0;padding:0;border-radius:14px;overflow:hidden;cursor:zoom-in;background:#000;
+    transform:rotateY(calc(var(--i) * 40deg)) translateZ(var(--r));backface-visibility:hidden;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.08);transition:box-shadow .3s}
+  .ring button:hover{box-shadow:0 30px 60px -20px rgba(0,0,0,.8),0 0 0 2px var(--gold)}
+  .ring img{width:100%;height:100%;object-fit:cover}
+  .ring-floor{position:absolute;left:50%;bottom:12%;width:120vw;height:60vh;translate:-50% 0;transform:rotateX(78deg);
+    background:repeating-linear-gradient(90deg,rgba(245,192,74,.16) 0 1px,transparent 1px 70px),repeating-linear-gradient(0deg,rgba(245,192,74,.16) 0 1px,transparent 1px 70px);
+    -webkit-mask:radial-gradient(ellipse at 50% 0,#000,transparent 65%);mask:radial-gradient(ellipse at 50% 0,#000,transparent 65%);pointer-events:none}
+  .ring-hint{text-align:center;color:var(--muted);font-size:14px;padding-bottom:28px}
+
+  /* Escena 3D genérica */
+  .p3d{perspective:1200px}
+  .s3d{transform-style:preserve-3d;will-change:transform}
+  .hero .wrap{transform-style:preserve-3d;will-change:transform}
+  .hero{perspective:900px}
+  .hero-logo-wrap{display:inline-block;transform-style:preserve-3d}
+  .members,.svc-grid,.social,.contact-cards{perspective:1000px}
+  .member,.svc,.social a,.contact-cards a{transform-style:preserve-3d}
+  .shine{position:relative}
+  .shine::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;
+    background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,222,133,.22),transparent 55%)}
+  .shine:hover::after{opacity:1}
+  .lightbox{position:fixed;inset:0;z-index:100;background:rgba(3,8,9,.94);display:none;place-items:center;padding:16px}
+  .lightbox.open{display:grid}
+  .lightbox img{max-height:86vh;max-width:min(1400px,100%);border-radius:10px;object-fit:contain}
+  .lb-btn{position:absolute;background:rgba(255,255,255,.1);border:0;color:#fff;width:48px;height:48px;border-radius:50%;cursor:pointer;font-size:22px;display:grid;place-items:center}
+  .lb-btn:hover{background:rgba(255,255,255,.22)}
+  .lb-close{top:16px;right:16px}.lb-prev{left:16px;top:50%;translate:0 -50%}.lb-next{right:16px;top:50%;translate:0 -50%}
+  .lb-prev[hidden],.lb-next[hidden]{display:none}
+
+  /* Contacto */
+  .contact{overflow:hidden;isolation:isolate;text-align:center}
+  .contact-bg{position:absolute;inset:0;z-index:-2}
+  .contact-bg img{width:100%;height:100%;object-fit:cover}
+  .contact::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(to bottom,var(--bg),rgba(6,17,19,.82) 30%,rgba(6,17,19,.9))}
+  .contact h2{font-size:clamp(34px,6vw,72px)}
+  .contact-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:980px;margin:40px auto 0;text-align:left}
+  .contact-cards a{display:block;padding:24px;border-radius:var(--radius);background:rgba(11,28,31,.85);border:1px solid var(--line);text-decoration:none;transition:border-color .25s}
+  .contact-cards a:hover{border-color:var(--gold);transform:translateY(-3px)}
+  .contact-cards svg{width:26px;height:26px;color:var(--gold);margin-bottom:14px}
+  .contact-cards small{display:block;font:600 11px/1 var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .contact-cards b{font-size:17px;word-break:break-word}
+  @media (max-width:860px){.contact-cards{grid-template-columns:1fr}}
+
+  footer{border-top:1px solid var(--line);padding:32px 0;color:var(--muted);font-size:14px}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  footer img{height:34px;width:auto}
+
+  /* Aparición al hacer scroll */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+  }
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+</style>
+</head>
+<body>
+
+<!-- Íconos reutilizables -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-whatsapp" viewBox="0 0 24 24"><path fill="currentColor" d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4M12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4C2.7 15.6 2.2 13.8 2.2 12 2.2 6.6 6.6 2.2 12 2.2c2.6 0 5.1 1 6.9 2.9 1.8 1.8 2.9 4.3 2.9 6.9 0 5.4-4.4 9.8-9.8 9.8M20.5 3.5C18.2 1.2 15.2 0 12 0 5.4 0 .1 5.3.1 11.9c0 2.1.5 4.1 1.6 5.9L0 24l6.3-1.7c1.7.9 3.7 1.4 5.7 1.4 6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.4-8.3"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m3 6 9 7 9-7"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M6 4.5v15a1 1 0 0 0 1.5.9l12.5-7.5a1 1 0 0 0 0-1.8L7.5 3.6A1 1 0 0 0 6 4.5"/></symbol>
+  <symbol id="i-youtube" viewBox="0 0 24 24"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8M9.6 15.6V8.4l6.2 3.6z"/></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-tiktok" viewBox="0 0 24 24"><path fill="currentColor" d="M16.6 2h-3.4v13.4a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V9.1a6.3 6.3 0 1 0 5.4 6.3V8.6a8 8 0 0 0 4.7 1.5V6.7a4.7 4.7 0 0 1-4.7-4.7"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></symbol>
+  <symbol id="i-keys" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M7 5v8M12 5v8M17 5v8M7 13v6M12 13v6M17 13v6"/></symbol>
+  <symbol id="i-drum" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="9" rx="9" ry="3.5"/><path d="M3 9v6c0 1.9 4 3.5 9 3.5s9-1.6 9-3.5V9M8 2l3 5M16 2l-3 5"/></symbol>
+  <symbol id="i-bass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m20 2 2 2-3 3-2-2zM17 5 9.5 12.5"/><path d="M10.5 11.5c-2-1-4-.5-5 1-.8 1.2-.2 2.2-1.5 3.5S2 19 4 21s3.8.5 5-1 2.3-.7 3.5-1.5c1.5-1 2-3 1-5z"/></symbol>
+  <symbol id="i-guitar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 9 6-6M18 3l3 3"/><path d="M11.4 9.6c-1.6-1.6-4.6-1.2-6.4.6-2.4 2.4-2.6 6-.6 8s5.6 1.8 8-.6c1.8-1.8 2.2-4.8.6-6.4"/><circle cx="9" cy="15" r="1.5"/></symbol>
+  <symbol id="i-perc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8h5l-1 13H7zM14 6h5l-1 15h-3z"/><path d="M6 8c0-1.1 1.1-2 2.5-2S11 6.9 11 8M14 6c0-1.1 1.1-2 2.5-2S19 4.9 19 6"/></symbol>
+</svg>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#inicio" class="nav-logo" aria-label="RetroKumbia, inicio"><img src="img/logo.webp" alt="RetroKumbia" width="95" height="38"></a>
+    <ul id="menu">
+      <li><a href="#banda">La banda</a></li>
+      <li><a href="#videoclip">Videoclip</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#rider">Rider</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a class="btn btn-primary nav-cta" href="https://wa.me/56954021040?text=Hola%2C%20quiero%20cotizar%20una%20presentaci%C3%B3n%20de%20RetroKumbia" target="_blank" rel="noopener">Contratar</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg"><img src="img/hero.webp" alt="" fetchpriority="high"></div>
+    <div class="wrap" id="heroInner">
+      <h1><span class="hero-logo-wrap" id="heroLogo"><img class="hero-logo" src="img/logo.webp" alt="RetroKumbia" width="900" height="361"></span></h1>
+      <p class="hero-tag">La movida tropical de los 90 y 2000 · En vivo</p>
+      <p class="hero-sub">Desde Lebu para todo Chile: los éxitos de la cumbia chilena y argentina que marcaron a una generación, con un show de alta energía.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://wa.me/56954021040?text=Hola%2C%20quiero%20cotizar%20una%20presentaci%C3%B3n%20de%20RetroKumbia" target="_blank" rel="noopener"><svg><use href="#i-whatsapp"/></svg>Contrata a la banda</a>
+        <a class="btn btn-ghost" href="#videoclip"><svg><use href="#i-play"/></svg>Ver videoclip</a>
+      </div>
+    </div>
+    <a href="#nosotros" class="scroll-cue" aria-label="Bajar"></a>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>Cumbia sound</span><span>Movida tropical</span><span>Eventos masivos</span><span>Festivales</span><span>Municipios</span><span>Fiestas costumbristas</span><span>Eventos privados</span>
+      <span>Cumbia sound</span><span>Movida tropical</span><span>Eventos masivos</span><span>Festivales</span><span>Municipios</span><span>Fiestas costumbristas</span><span>Eventos privados</span>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <section id="nosotros">
+    <div class="wrap intro-grid">
+      <div class="reveal">
+        <span class="eyebrow">01 · Quiénes somos</span>
+        <h2>Nostalgia que se <span class="grad">baila</span></h2>
+        <p class="lead">RetroKumbia es una agrupación musical dedicada a interpretar los éxitos de la movida tropical chilena y argentina que marcaron a toda una generación.</p>
+        <p class="muted" style="margin-top:1em">Entregamos un espectáculo de alta energía, con interacción con el público y una propuesta artística profesional. La puesta en escena está pensada para crear una experiencia musical dinámica, entretenida y adaptable a cualquier formato de evento.</p>
+        <ul class="tags">
+          <li>Eventos masivos</li><li>Celebraciones institucionales</li><li>Actividades municipales</li><li>Festivales</li><li>Fiestas costumbristas</li><li>Eventos privados</li>
+        </ul>
+      </div>
+      <div class="intro-img s3d" data-3d="swing"><img src="img/vocalista.webp" alt="El vocalista de RetroKumbia cantando en el escenario" loading="lazy"></div>
+    </div>
+  </section>
+
+  <!-- BANDA -->
+  <section class="band" id="banda">
+    <div class="wrap">
+      <div class="band-head reveal">
+        <div><span class="eyebrow">02 · La banda</span><h2>Seis músicos,<br>puro sabor</h2></div>
+        <p class="lead">Seis músicos que entregan toda su energía y su sabor en cada presentación.</p>
+      </div>
+      <div class="band-photo s3d" data-3d="rise"><img src="img/banda-logo.webp" alt="Los seis integrantes de RetroKumbia con el logo de la banda" loading="lazy"></div>
+      <div class="members">
+        <article class="member shine" data-3d="card" data-tilt><svg><use href="#i-mic"/></svg><div class="role">Voz</div><div class="name">John Collao</div></article>
+        <article class="member shine" data-3d="card" data-tilt><svg><use href="#i-keys"/></svg><div class="role">Teclado</div><div class="name">Andrés Medina</div></article>
+        <article class="member shine" data-3d="card" data-tilt><svg><use href="#i-drum"/></svg><div class="role">Batería</div><div class="name">Fernando Peña</div></article>
+        <article class="member shine" data-3d="card" data-tilt><svg><use href="#i-bass"/></svg><div class="role">Bajo</div><div class="name">Erwin Peña</div></article>
+        <article class="member shine" data-3d="card" data-tilt><svg><use href="#i-guitar"/></svg><div class="role">Guitarra</div><div class="name">Jorge Salazar</div></article>
+        <article class="member shine" data-3d="card" data-tilt><svg><use href="#i-perc"/></svg><div class="role">Percusión</div><div class="name">Erick Rodríguez</div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEOCLIP -->
+  <section id="videoclip">
+    <div class="wrap video-grid">
+      <a class="video-card s3d" data-3d="rise" data-tilt href="https://www.youtube.com/@RetroKumbia_oficial" target="_blank" rel="noopener" aria-label="Ver el videoclip De los besos que te di en YouTube">
+        <img src="img/galeria-6.webp" alt="Rodaje del videoclip De los besos que te di" loading="lazy">
+        <div class="play"><span><svg><use href="#i-play"/></svg></span></div>
+        <div class="video-label">RetroKumbia · De los besos que te di (Video oficial)</div>
+      </a>
+      <div class="reveal">
+        <span class="eyebrow">Primer videoclip</span>
+        <h2>Un debut <span class="grad">arrollador</span></h2>
+        <p>Con <em>De los besos que te di</em>, nuestro primer videoclip oficial, la banda marcó un hito. El rodaje reúne una estética nostálgica muy cuidada con la energía de nuestra cumbia, entre luces, baile y pasión.</p>
+        <p class="muted">Una semana después del estreno, el video ya había superado las 4.000 reproducciones. Nuestra música no solo se escucha: se vive.</p>
+        <div class="stats">
+          <div class="stat"><b>+4K</b><small>vistas en la 1.ª semana</small></div>
+          <div class="stat"><b>3 sep</b><small>estreno 2026</small></div>
+          <div class="stat"><b>Lebu</b><small>para todo Chile</small></div>
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="social">
+        <a href="https://www.youtube.com/@RetroKumbia_oficial" target="_blank" rel="noopener" class="shine" data-tilt><span class="ico"><svg><use href="#i-youtube"/></svg></span><span><b>YouTube</b><small>@RetroKumbia_oficial</small></span></a>
+        <a href="https://www.instagram.com/retrokumbia_oficial/" target="_blank" rel="noopener" class="shine" data-tilt><span class="ico"><svg><use href="#i-instagram"/></svg></span><span><b>Instagram</b><small>@retrokumbia_oficial</small></span></a>
+        <a href="https://www.tiktok.com/@la.retro.kumbia" target="_blank" rel="noopener" class="shine" data-tilt><span class="ico"><svg><use href="#i-tiktok"/></svg></span><span><b>TikTok</b><small>@la.retro.kumbia</small></span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="services" id="servicios">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow">04 · Servicios</span>
+        <h2>Qué incluye el show</h2>
+        <p class="lead">Nos encargamos de todo lo artístico para que tu evento salga redondo.</p>
+      </div>
+      <div class="svc-grid">
+        <div class="svc shine" data-3d="card" data-tilt><span class="num">01</span><h3>Show profesional</h3><p>Presentación artística profesional de toda la agrupación.</p></div>
+        <div class="svc shine" data-3d="card" data-tilt><span class="num">02</span><h3>Repertorio bailable</h3><p>Repertorio de cumbia y música bailable, con los clásicos de siempre.</p></div>
+        <div class="svc shine" data-3d="card" data-tilt><span class="num">03</span><h3>Animación</h3><p>Animación e interacción musical con el público durante todo el espectáculo.</p></div>
+        <div class="svc shine" data-3d="card" data-tilt><span class="num">04</span><h3>Coordinación con producción</h3><p>Coordinación previa con la producción general del evento.</p></div>
+        <div class="svc shine" data-3d="card" data-tilt><span class="num">05</span><h3>Coordinación técnica</h3><p>Trabajo conjunto con el encargado de sonido y prueba de sonido según la programación.</p></div>
+        <div class="svc shine" data-3d="card" data-tilt><span class="num">06</span><h3>Logística artística</h3><p>Coordinamos la llegada de los integrantes y toda la logística de la banda.</p></div>
+      </div>
+      <div class="duration s3d" data-3d="rise">
+        <div class="big">60<small>minutos</small></div>
+        <div>
+          <h3>05 · Duración del show</h3>
+          <p>Es la duración referencial. Se puede ajustar según la programación general del evento, lo que necesite la institución contratante y lo que se acuerde antes con la representación artística.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIDER -->
+  <section id="rider">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow">Para productores</span>
+        <h2>Rider y requerimientos</h2>
+        <p class="lead">Todo lo necesario para que la presentación se desarrolle sin problemas. Los detalles específicos se coordinan antes con producción.</p>
+      </div>
+      <div class="rider-grid">
+        <div class="panel reveal">
+          <span class="eyebrow">07 · Camarín</span>
+          <h3 style="margin-top:12px">Espacio privado para la banda</h3>
+          <ul class="check">
+            <li>Lugar limpio, seguro y reservado para los integrantes y el equipo artístico.</li>
+            <li>Acceso antes y durante la actividad.</li>
+            <li>Servicios higiénicos disponibles.</li>
+            <li>Espejo y condiciones adecuadas para prepararse antes del show.</li>
+            <li>Espacio seguro para guardar instrumentos y pertenencias.</li>
+          </ul>
+        </div>
+        <div class="panel reveal">
+          <span class="eyebrow">08 · Catering artístico</span>
+          <h3 style="margin-top:12px">Alimentación para banda y equipo</h3>
+          <span class="pill">Cantidad referencial: 10 personas</span>
+          <ul class="check">
+            <li>Bebidas sin alcohol.</li>
+            <li>Agua mineral sin gas.</li>
+            <li>Café, té o infusiones.</li>
+            <li>Alimentación completa según el horario de la presentación.</li>
+            <li>Snacks o alimentos ligeros antes del show.</li>
+            <li>Alojamiento, si corresponde.</li>
+          </ul>
+        </div>
+        <div class="panel tech s3d" data-3d="rise">
+          <span class="eyebrow">03 · Ficha técnica</span>
+          <h3 style="margin-top:12px">Stage plot e input list</h3>
+          <p class="muted">22 canales de entrada y 8 mezclas de monitoreo in-ear (IEM). El monitoreo se hace desde la consola de sala.</p>
+          <div class="tech-meta"><span class="pill">Consola Midas M32</span><span class="pill">Consola Behringer X32</span><span class="pill">2 micrófonos inalámbricos</span></div>
+          <button class="tech-img" data-full="img/ficha-tecnica.webp" aria-label="Ampliar ficha técnica" style="border:0;padding:0;width:100%"><img src="img/ficha-tecnica.webp" alt="Ficha técnica: plano de escenario y lista de canales de RetroKumbia" loading="lazy"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section id="galeria" class="ring-sec">
+    <div class="ring-sticky">
+      <div class="wrap">
+        <span class="eyebrow">09 · Galería</span>
+        <h2>Así se vive en vivo</h2>
+      </div>
+      <div class="ring-stage">
+        <div class="ring-floor"></div>
+        <div class="ring" id="gallery">
+          <button style="--i:0" data-full="img/galeria-7.webp"><img src="img/galeria-7.webp" alt="El vocalista con lentes de sol cantando frente a las luces del escenario" loading="lazy"></button>
+          <button style="--i:1" data-full="img/galeria-1.webp"><img src="img/galeria-1.webp" alt="Tecladista tocando frente al público" loading="lazy"></button>
+          <button style="--i:2" data-full="img/galeria-5.webp"><img src="img/galeria-5.webp" alt="La banda en el set del videoclip" loading="lazy"></button>
+          <button style="--i:3" data-full="img/galeria-3.webp"><img src="img/galeria-3.webp" alt="El bajista tocando en el escenario" loading="lazy"></button>
+          <button style="--i:4" data-full="img/galeria-2.webp"><img src="img/galeria-2.webp" alt="El percusionista en el escenario" loading="lazy"></button>
+          <button style="--i:5" data-full="img/galeria-4.webp"><img src="img/galeria-4.webp" alt="El baterista en primer plano" loading="lazy"></button>
+          <button style="--i:6" data-full="img/galeria-8.webp"><img src="img/galeria-8.webp" alt="La banda completa tocando en un escenario al aire libre" loading="lazy"></button>
+          <button style="--i:7" data-full="img/galeria-9.webp"><img src="img/galeria-9.webp" alt="Teclado y batería durante un show" loading="lazy"></button>
+          <button style="--i:8" data-full="img/publico.webp"><img src="img/publico.webp" alt="El público frente al escenario" loading="lazy"></button>
+        </div>
+      </div>
+      <p class="ring-hint">Sigue bajando para girar · toca una foto para ampliarla</p>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="contact" id="contacto">
+    <div class="contact-bg"><img src="img/escenario-2.webp" alt="" loading="lazy"></div>
+    <div class="wrap reveal">
+      <span class="eyebrow">10 · Contacto</span>
+      <h2>Lleva la fiesta<br>a tu <span class="grad">evento</span></h2>
+      <p class="lead" style="margin:0 auto">Representación artística oficial · Grupo RetroKumbia Manager</p>
+      <div class="contact-cards">
+        <a href="https://wa.me/56954021040?text=Hola%2C%20quiero%20cotizar%20una%20presentaci%C3%B3n%20de%20RetroKumbia" target="_blank" rel="noopener" class="shine" data-tilt><svg><use href="#i-whatsapp"/></svg><small>WhatsApp</small><b>Escríbenos ahora</b></a>
+        <a href="tel:+56954021040" class="shine" data-tilt><svg><use href="#i-phone"/></svg><small>Teléfono</small><b>+56 9 5402 1040</b></a>
+        <a class="shine" data-tilt href="mailto:manager.retrokumbia@gmail.com?subject=Contrataci%C3%B3n%20RetroKumbia"><svg><use href="#i-mail"/></svg><small>Correo</small><b>manager.retrokumbia@gmail.com</b></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="img/logo.webp" alt="RetroKumbia" width="85" height="34" loading="lazy">
+    <span>© <span id="year">2026</span> RetroKumbia · Lebu, Chile</span>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
+  <img id="lbImg" alt="">
+  <button class="lb-btn lb-close" id="lbClose" aria-label="Cerrar">✕</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Anterior">‹</button>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Siguiente">›</button>
+</div>
+
+<script>
+  // Navegación: fondo al hacer scroll + menú móvil
+  const nav = document.getElementById('nav'), menuBtn = document.getElementById('menuBtn');
+  const onScroll = () => nav.classList.toggle('scrolled', scrollY > 40);
+  addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  menuBtn.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('#menu a').forEach(a => a.addEventListener('click', () => {
+    nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded', false);
+  }));
+
+  // Aparición al hacer scroll
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (el.parentElement.classList.contains('members') || el.parentElement.classList.contains('svc-grid') ? (i % 6) * 70 : 0) + 'ms';
+    io.observe(el);
+  });
+
+  // Lightbox para galería y ficha técnica
+  const lb = document.getElementById('lightbox'), lbImg = document.getElementById('lbImg');
+  const prev = document.getElementById('lbPrev'), next = document.getElementById('lbNext');
+  let set = [], idx = 0;
+  const show = i => { idx = (i + set.length) % set.length; lbImg.src = set[idx].dataset.full; lbImg.alt = set[idx].querySelector('img').alt; };
+  const open = (items, i) => {
+    set = items; prev.hidden = next.hidden = items.length < 2;
+    show(i); lb.classList.add('open'); document.body.style.overflow = 'hidden';
+  };
+  const close = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
+  const galleryItems = [...document.querySelectorAll('#gallery button')];
+  galleryItems.forEach((b, i) => b.addEventListener('click', () => open(galleryItems, i)));
+  document.querySelectorAll('.tech-img').forEach(b => b.addEventListener('click', () => open([b], 0)));
+  prev.onclick = () => show(idx - 1); next.onclick = () => show(idx + 1);
+  document.getElementById('lbClose').onclick = close;
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft' && set.length > 1) show(idx - 1);
+    if (e.key === 'ArrowRight' && set.length > 1) show(idx + 1);
+  });
+
+  // ---------- Efectos 3D ligados al scroll y al mouse ----------
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = matchMedia('(pointer: fine)').matches;
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const docTop = el => { let y = 0; while (el) { y += el.offsetTop; el = el.offsetParent; } return y; };
+
+  const heroInner = document.getElementById('heroInner');
+  const heroBg = document.querySelector('.hero-bg img');
+  const heroLogo = document.getElementById('heroLogo');
+  const ticker = document.querySelector('.ticker-track');
+  const ringSec = document.getElementById('galeria'), ring = document.getElementById('gallery');
+  const scenes = [...document.querySelectorAll('[data-3d]')].map(el => ({el, type: el.dataset['3d'], top: 0, h: 0, tilt: {x: 0, y: 0, tx: 0, ty: 0}}));
+  const tiltMap = new Map(scenes.map(s => [s.el, s.tilt]));
+
+  // Inclinación con el mouse (solo con puntero fino)
+  document.querySelectorAll('[data-tilt]').forEach(el => {
+    if (!tiltMap.has(el)) {
+      const t = {x: 0, y: 0, tx: 0, ty: 0};
+      tiltMap.set(el, t); scenes.push({el, type: 'tilt', tilt: t, top: 0, h: 0});
+    }
+    if (!finePointer) return;
+    const t = tiltMap.get(el);
+    el.addEventListener('pointermove', e => {
+      const r = el.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      t.tx = (py - .5) * -16; t.ty = (px - .5) * 16;
+      el.style.setProperty('--mx', px * 100 + '%'); el.style.setProperty('--my', py * 100 + '%');
+    });
+    el.addEventListener('pointerleave', () => { t.tx = 0; t.ty = 0; });
+  });
+
+  // Logo del hero sigue al mouse
+  const heroTilt = {x: 0, y: 0, tx: 0, ty: 0};
+  if (finePointer) addEventListener('pointermove', e => {
+    heroTilt.ty = (e.clientX / innerWidth - .5) * 18;
+    heroTilt.tx = (e.clientY / innerHeight - .5) * -14;
+  });
+
+  let ringR = 0, lastY = scrollY, vel = 0, tickX = 0;
+  const measure = () => {
+    scenes.forEach(s => { s.top = docTop(s.el); s.h = s.el.offsetHeight; });
+    ringR = ring.offsetWidth * 1.42;
+  };
+
+  const frame = () => {
+    const y = scrollY, vh = innerHeight;
+    vel = lerp(vel, y - lastY, .12); lastY = y;
+
+    // Hero: el contenido se aleja en profundidad y el fondo hace parallax
+    const h = clamp(y / vh);
+    heroLogo.style.transform = `rotateX(${heroTilt.x = lerp(heroTilt.x, heroTilt.tx, .08)}deg) rotateY(${heroTilt.y = lerp(heroTilt.y, heroTilt.ty, .08)}deg)`;
+    heroInner.style.transform = `translate3d(0,${h * 120}px,${-h * 500}px) rotateX(${h * 30}deg)`;
+    heroInner.style.opacity = 1 - h * 1.2;
+    heroBg.style.transform = `translate3d(0,${h * 25}%,0) scale(${1.08 + h * .15})`;
+
+    // Cinta: acelera y se inclina según la velocidad del scroll
+    tickX = (tickX + 0.6 + Math.abs(vel) * .6) % (ticker.scrollWidth / 2);
+    ticker.style.transform = `translateX(${-tickX}px) skewX(${clamp(-vel * .4, -14, 14)}deg)`;
+
+    scenes.forEach((s, i) => {
+      const t = s.tilt; t.x = lerp(t.x, t.tx, .1); t.y = lerp(t.y, t.ty, .1);
+      const tilt = ` rotateX(${t.x}deg) rotateY(${t.y}deg)`;
+      const enter = clamp((y + vh - s.top) / (vh * .75));         // 0 = bajo la pantalla, 1 = visible
+      const center = (s.top + s.h / 2 - y - vh / 2) / vh;          // -1..1 respecto al centro
+      if (s.type === 'rise') {
+        const k = 1 - enter;
+        s.el.style.transform = `perspective(1200px) translate3d(0,${k * 90}px,${-k * 220}px) rotateX(${k * 38}deg)` + tilt;
+        s.el.style.opacity = .25 + enter * .75;
+      } else if (s.type === 'swing') {
+        s.el.style.transform = `perspective(1200px) rotateY(${center * -28}deg) rotateZ(${center * 3}deg) translateZ(${-Math.abs(center) * 120}px)`;
+      } else if (s.type === 'card') {
+        const idx = [...s.el.parentElement.children].indexOf(s.el);
+        const k = 1 - clamp((y + vh - s.top - idx * 30) / (vh * .55));
+        s.el.style.transform = `translate3d(0,${k * 60}px,${-k * 300}px) rotateX(${k * 70}deg) rotateY(${k * (idx % 2 ? 25 : -25)}deg)` + tilt + (t.tx || t.ty ? ' translateZ(20px)' : '');
+        s.el.style.opacity = 1 - k;
+      } else {
+        s.el.style.transform = `perspective(800px)` + tilt + (Math.abs(t.x) + Math.abs(t.y) > .2 ? ' translateZ(12px)' : '');
+      }
+    });
+
+    // Galería: el anillo gira mientras la sección está fija
+    const p = clamp((y - ringSec.offsetTop) / (ringSec.offsetHeight - vh));
+    ring.style.transform = `translateZ(${-ringR}px) rotateX(${-6 + Math.sin(p * Math.PI) * 4}deg) rotateY(${-p * 360 - 10}deg)`;
+
+    requestAnimationFrame(frame);
+  };
+
+  if (!reduce) {
+    addEventListener('resize', measure);
+    addEventListener('load', measure);
+    measure(); requestAnimationFrame(frame);
+  } else {
+    ring.style.transform = `translateZ(${-ring.offsetWidth * 1.42}px)`;
+  }
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
